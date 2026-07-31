@@ -30,12 +30,13 @@
   #screen-login {
     flex-direction: column;
     background: radial-gradient(ellipse 100% 100% at 50% 100%,
-      rgba(24,22,29,1) 17.277%,
-      rgba(32,17,58,1) 39.667%,
-      rgba(41,11,91,1) 50.57%,
-      rgba(57,3,118,1) 61.162%,
-      rgba(76,18,139,1) 74.94%,
-      rgba(121,24,191,1) 100%);
+      rgba(24,13,43,1) 9.8382%,
+      rgba(34,18,61,1) 20.978%,
+      rgba(37,19,69,1) 32.793%,
+      rgba(52,13,100,1) 50.57%,
+      rgba(61,3,118,1) 61.162%,
+      rgba(76,18,139,1) 75.218%,
+      rgba(110,12,180,1) 100%);
     padding: 32px;
   }
   .content-area {
@@ -386,11 +387,28 @@
   const eyeOnIcon = document.getElementById('eye-on-icon');
   const rememberCheckbox = document.getElementById('remember-checkbox');
 
+  const REMEMBER_KEY = 'flexifai_remembered_email';
+
+  // Restore remembered email on load, if any
+  (function restoreRememberedEmail() {
+    const saved = localStorage.getItem(REMEMBER_KEY);
+    if (saved) {
+      emailInput.value = saved;
+      rememberCheckbox.classList.add('checked');
+    }
+  })();
+
   function updateButtonState() {
     const enabled = emailInput.value.trim().length > 0 && passwordInput.value.trim().length > 0;
     loginBtn.classList.toggle('enabled', enabled);
   }
-  emailInput.addEventListener('input', updateButtonState);
+  emailInput.addEventListener('input', function () {
+    updateButtonState();
+    // Keep the remembered value in sync while "Remember me" is checked
+    if (rememberCheckbox.classList.contains('checked')) {
+      localStorage.setItem(REMEMBER_KEY, emailInput.value);
+    }
+  });
   passwordInput.addEventListener('input', updateButtonState);
 
   function toggleEyeIcon() {
@@ -409,13 +427,23 @@
 
   rememberCheckbox.addEventListener('click', function () {
     rememberCheckbox.classList.toggle('checked');
+    if (rememberCheckbox.classList.contains('checked')) {
+      localStorage.setItem(REMEMBER_KEY, emailInput.value);
+    } else {
+      localStorage.removeItem(REMEMBER_KEY);
+    }
   });
+
+  // Restoring a remembered email can make the form valid immediately
+  updateButtonState();
 
   loginBtn.addEventListener('click', function () {
     if (!loginBtn.classList.contains('enabled')) return;
-    document.getElementById('screen-login').classList.remove('active');
-    document.getElementById('screen-dashboard').classList.add('active');
-    refreshTimestamp();
+    // Dashboard redirect temporarily disabled — we're rebuilding the dashboard separately.
+    // To reconnect: uncomment the two lines below.
+    // document.getElementById('screen-login').classList.remove('active');
+    // document.getElementById('screen-dashboard').classList.add('active');
+    // refreshTimestamp();
   });
 
   [emailInput, passwordInput].forEach(function (el) {
@@ -435,7 +463,7 @@
   function logOut() {
     document.getElementById('screen-dashboard').classList.remove('active');
     document.getElementById('screen-login').classList.add('active');
-    emailInput.value = '';
+    emailInput.value = localStorage.getItem(REMEMBER_KEY) || '';
     passwordInput.value = '';
     updateButtonState();
   }
