@@ -198,9 +198,43 @@
   }
   .date-select { width: 340px; justify-content: space-between; flex-shrink: 0; }
   .filter-group { display: flex; gap: 8px; align-items: center; flex: 1; min-width: 0; }
+
+  .date-select-wrap { position: relative; flex-shrink: 0; }
+  .date-dropdown {
+    display: none;
+    position: absolute; top: calc(100% + 8px); left: 0;
+    width: 340px; box-sizing: border-box;
+    background: var(--surface); border: 1px solid var(--outline); border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(26,46,74,0.12);
+    padding: 12px; flex-direction: column; gap: 6px; z-index: 50;
+  }
+  .date-dropdown.open { display: flex; }
+  .date-dropdown-range-row { display: flex; align-items: flex-end; gap: 8px; width: 100%; }
+  .date-dropdown-field-block { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+  .date-dropdown-field-label { font-size: 12px; color: var(--text-secondary); text-align: left; }
+  .date-dropdown-field {
+    background: var(--surface); border: 1px solid var(--outline); border-radius: 8px;
+    height: 32px; box-sizing: border-box; display: flex; align-items: center; gap: 8px;
+    padding: 0 12px 0 8px;
+  }
+  .date-dropdown-field svg { width: 16px; height: 16px; flex-shrink: 0; color: #B481FF; }
+  .date-dropdown-field span { font-size: 12px; font-weight: 500; color: var(--text-main); white-space: nowrap; }
+  .date-dropdown-dash { font-size: 14px; color: var(--text-secondary); padding-bottom: 6px; }
+  .date-dropdown-divider { height: 1px; background: var(--outline); width: 100%; }
+  .date-dropdown-options { display: flex; flex-direction: column; gap: 2px; width: 100%; }
+  .date-dropdown-option {
+    background: var(--surface); border: 1px solid var(--outline); border-radius: 8px;
+    height: 32px; box-sizing: border-box; display: flex; align-items: center; padding: 0 12px;
+    font-size: 14px; color: var(--text-main); cursor: pointer;
+  }
+  .date-dropdown-option:hover {
+    background: var(--menu-active-muted, rgba(180,129,255,0.06)); border-color: var(--outline);
+  }
   .filter-select { flex: 1; min-width: 0; justify-content: space-between; }
   .pill-select { justify-content: space-between; width: auto; flex-shrink: 0; }
   .pill-select svg, .date-select svg, .filter-select svg { width: 24px; height: 24px; flex-shrink: 0; color: var(--text-secondary); stroke-width: 1.5; }
+  .date-select-chevron { transition: transform 0.15s ease; }
+  .date-select-trigger-open .date-select-chevron { transform: rotate(180deg); }
   .last-update-row { display: flex; align-items: center; gap: 16px; }
   .last-update-text { font-size: 16px; color: var(--text-secondary); }
   .refresh-btn-outline { border: 1px solid var(--outline); border-radius: 10px; height: 40px; padding: 8px 24px; display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 500; color: var(--text-main); background: var(--surface); cursor: pointer; box-sizing: border-box; }
@@ -262,6 +296,7 @@
     position: absolute; top: calc(100% + 18px); left: 50%; transform: translateX(-50%);
     font-size: 12px; font-weight: 500; color: var(--text-secondary); white-space: nowrap;
   }
+  .chart-date-label-last { left: auto; right: 12px; transform: none; }
 
   .balances-content { border: 1px solid var(--outline); border-radius: 8px; overflow: hidden; }
   .balances-header {
@@ -469,8 +504,40 @@
     <div class="main-content">
       <div class="top-bar">
         <div class="filters">
-          <div class="date-select">30 May-30 Apr
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          <div class="date-select-wrap">
+          <div class="date-select" id="date-select-trigger">30 May-30 Apr
+            <svg class="date-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="date-dropdown" id="date-dropdown">
+            <div class="date-dropdown-range-row">
+              <div class="date-dropdown-field-block">
+                <div class="date-dropdown-field-label">From</div>
+                <div class="date-dropdown-field">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+                  <span>05/30/2025</span>
+                </div>
+              </div>
+              <div class="date-dropdown-dash">-</div>
+              <div class="date-dropdown-field-block">
+                <div class="date-dropdown-field-label">To</div>
+                <div class="date-dropdown-field">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+                  <span>04/30/2026</span>
+                </div>
+              </div>
+            </div>
+            <div class="date-dropdown-divider"></div>
+            <div class="date-dropdown-options">
+              <div class="date-dropdown-option">Yesterday</div>
+              <div class="date-dropdown-option">Today</div>
+              <div class="date-dropdown-option">Last 7 days</div>
+              <div class="date-dropdown-option">Last 14 days</div>
+              <div class="date-dropdown-option">Last month</div>
+              <div class="date-dropdown-option">Last 3 months</div>
+              <div class="date-dropdown-option">Last 6 months</div>
+              <div class="date-dropdown-option">Last 12 months</div>
+            </div>
+          </div>
           </div>
           <div class="filter-group">
             <div class="pill-select">EUR
@@ -623,7 +690,7 @@
               </div>
               <div class="chart-hover-point" style="left:100%;">
                 <div class="chart-guide-line"></div>
-                <div class="chart-date-label">30 Apr</div>
+                <div class="chart-date-label chart-date-label-last">30 Apr</div>
                 <div class="chart-dot" style="top:7.46%;"></div>
                 <div class="chart-tooltip chart-tooltip-left" style="top:7.46%;"><div class="tooltip-row"><span class="tooltip-date">30 Apr</span><span class="tooltip-label">+ 12%</span></div><div class="tooltip-value">180.00 EUR</div></div>
               </div>
@@ -852,6 +919,22 @@
       if (e.key === 'Enter') loginBtn.click();
     });
   });
+
+  (function () {
+    const trigger = document.getElementById('date-select-trigger');
+    const dropdown = document.getElementById('date-dropdown');
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      dropdown.classList.toggle('open');
+      trigger.classList.toggle('date-select-trigger-open');
+    });
+    document.addEventListener('click', function (e) {
+      if (!dropdown.contains(e.target) && e.target !== trigger) {
+        dropdown.classList.remove('open');
+        trigger.classList.remove('date-select-trigger-open');
+      }
+    });
+  })();
 
   document.querySelectorAll('.donut-seg-group').forEach(function (group) {
     const seg = group.querySelector('.donut-seg');
