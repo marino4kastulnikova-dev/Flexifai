@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { overflow: hidden; }
+  html { overflow-x: hidden; overflow-y: auto; }
   html, body { width: 1920px; }
   body {
     font-family: 'DM Sans', system-ui, sans-serif;
@@ -840,9 +840,7 @@
 
 <script>
   function fitToScreen() {
-    const scaleW = window.innerWidth / 1920;
-    const scaleH = window.innerHeight / 1080;
-    const scale = Math.min(scaleW, scaleH);
+    const scale = window.innerWidth / 1920;
     document.body.style.transform = 'scale(' + scale + ')';
     document.body.style.transformOrigin = 'top left';
     document.documentElement.style.height = (1080 * scale) + 'px';
