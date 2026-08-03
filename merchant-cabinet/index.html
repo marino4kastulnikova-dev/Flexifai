@@ -21,6 +21,37 @@
   .screen { display: none; width: 1920px; min-height: 1080px; }
   .screen.active { display: flex; }
 
+  :root {
+    --text-main: #222124;
+    --text-secondary: #747474;
+    --outline: #e8e8e8;
+    --background-muted: #f9f9f9;
+    --background-primary: #ededed;
+    --surface: #ffffff;
+    --label-positive-bg: #f1fff6;
+    --label-positive-text: #00a634;
+    --amt-avail: #009f25;
+    --amt-hold: #ff7400;
+    --button-small-bg: #ededed;
+    --brand-gradient-login-btn: linear-gradient(174.14deg, rgb(166,99,255) 3.3689%, rgb(48,0,113) 95.789%);
+    --brand-gradient-checkbox: linear-gradient(139.46deg, rgb(166,99,255) 3.3689%, rgb(48,0,113) 95.789%);
+    --brand-purple-main: #b481ff;
+    --brand-purple-click: #410098;
+    --focus-border: #bb87ff;
+    --focus-shadow: rgba(138,56,245,0.24);
+  }
+  #screen-login, .sidebar {
+    --text-main: #ffffff;
+    --text-secondary: #9b9b9b;
+    --outline: rgba(180,129,255,0.26);
+    --menu-background: #222124;
+    --menu-text-muted: #817f87;
+    --menu-active-main: #b481ff;
+    --menu-active-muted: rgba(180,129,255,0.06);
+    --menu-icon: #817F87;
+    --sidebar-divider: #333235;
+  }
+
   /* ---------- LOGIN SCREEN ----------
      Exact radial gradient decoded from the Figma SVG:
      gradientTransform matrix(0.000005132,-108,192,0.0000090497,960,1080)
@@ -130,61 +161,171 @@
   .login-btn.enabled:active { background: #410098; opacity: 1; }
 
   /* ---------- DASHBOARD SCREEN ---------- */
-  #screen-dashboard { width: 100%; }
+  #screen-dashboard { width: 100%; height: 1080px; overflow: hidden; flex-direction: column; }
   .sidebar {
-    width: 240px; flex-shrink: 0; background: #18161d; color: white;
-    padding: 24px 0; min-height: 100vh; display: flex; flex-direction: column;
+    width: 352px; flex-shrink: 0; background: var(--menu-background); color: var(--text-main);
+    padding: 32px; height: 1080px; display: flex; flex-direction: column;
+    justify-content: space-between; position: sticky; top: 0; box-sizing: border-box;
   }
-  .sidebar-logo { font-weight: 700; font-size: 18px; letter-spacing: 1px; padding: 0 24px 24px; }
-  .nav-section-label { font-size: 11px; color: #7a7680; text-transform: uppercase; padding: 16px 24px 8px; letter-spacing: 0.5px; }
+  .sidebar-logo-row { display: flex; align-items: center; justify-content: space-between; height: 64px; margin-bottom: 16px; }
+  .collapse-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; cursor: pointer; color: var(--text-main); flex-shrink: 0; }
+  .collapse-btn svg { width: 24px; height: 24px; stroke-width: 1.5; }
+  .nav-items { display: flex; flex-direction: column; gap: 40px; }
+  .nav-section { display: flex; flex-direction: column; gap: 24px; }
+  .nav-options { display: flex; flex-direction: column; gap: 12px; }
+  .nav-section-label { font-size: 12px; color: var(--menu-text-muted); text-transform: uppercase; letter-spacing: 0.24px; }
   .nav-item {
-    display: flex; align-items: center; gap: 10px; padding: 10px 24px; font-size: 14px;
-    color: #d4d2d8; cursor: pointer;
+    display: flex; align-items: center; gap: 16px; padding: 8px 16px; height: 48px; box-sizing: border-box;
+    font-size: 16px; color: var(--text-main); cursor: pointer; border-radius: 10px;
   }
-  .nav-item.active { background: rgba(180,129,255,0.1); color: white; border-left: 3px solid #b481ff; padding-left: 21px; }
-  .sidebar-footer { margin-top: auto; padding: 16px 24px; display: flex; gap: 10px; align-items: center; border-top: 1px solid #2a2830; }
-  .avatar { width: 36px; height: 36px; border-radius: 50%; background: #2a2830; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+  .nav-item.active { background: var(--menu-active-muted); border-left: 3px solid var(--menu-active-main); padding-left: 13px; }
+  .nav-item:not(.active):hover { background: var(--menu-active-muted); }
+  .nav-item svg { width: 24px; height: 24px; flex-shrink: 0; stroke-width: 1.5; color: var(--menu-icon); }
+  .nav-item.active svg { color: var(--text-main); }
+  .sidebar-footer { display: flex; flex-direction: column; gap: 20px; }
+  .sidebar-divider { height: 1px; background: var(--sidebar-divider); width: 100%; }
+  .sidebar-footer-items { display: flex; gap: 16px; align-items: center; }
+  .avatar { width: 56px; height: 56px; border-radius: 100px; background: var(--menu-active-muted); color: var(--text-main); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .footer-name { font-size: 20px; font-weight: 500; color: var(--text-main); }
+  .footer-role { font-size: 14px; color: var(--menu-text-muted); }
 
-  .main-content { flex: 1; padding: 32px; background: #f4f3f6; min-height: 100vh; }
-  .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
-  .pill-select { border: 1px solid #e0dfe4; border-radius: 8px; padding: 8px 14px; font-size: 13px; color: #333; background: white; }
-  .toolbar-right { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #8a8790; }
-  .refresh-btn { border: 1px solid #e0dfe4; border-radius: 8px; padding: 6px 10px; background: white; cursor: pointer; }
+  .main-content { flex: 1; min-width: 0; padding: 32px; background: var(--background-primary); height: 1080px; overflow-y: auto; box-sizing: border-box; }
+  .top-bar { background: var(--surface); height: 64px; border-radius: 16px; padding: 8px 24px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; box-sizing: border-box; }
+  .filters { display: flex; gap: 16px; align-items: center; width: 720px; }
+  .date-select, .pill-select, .filter-select {
+    border: 1px solid var(--outline); border-radius: 10px; height: 40px; padding: 6px 12px 6px 16px;
+    display: flex; align-items: center; gap: 16px; font-size: 16px; font-weight: 500; color: var(--text-main); cursor: pointer; box-sizing: border-box;
+  }
+  .date-select { width: 340px; justify-content: space-between; flex-shrink: 0; }
+  .filter-group { display: flex; gap: 8px; align-items: center; flex: 1; min-width: 0; }
+  .filter-select { flex: 1; min-width: 0; justify-content: space-between; }
+  .pill-select { justify-content: space-between; width: auto; flex-shrink: 0; }
+  .pill-select svg, .date-select svg, .filter-select svg { width: 24px; height: 24px; flex-shrink: 0; color: var(--text-secondary); stroke-width: 1.5; }
+  .last-update-row { display: flex; align-items: center; gap: 16px; }
+  .last-update-text { font-size: 16px; color: var(--text-secondary); }
+  .refresh-btn-outline { border: 1px solid var(--outline); border-radius: 10px; height: 40px; padding: 8px 24px; display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 500; color: var(--text-main); background: var(--surface); cursor: pointer; box-sizing: border-box; }
+  .refresh-btn-outline svg { width: 20px; height: 20px; stroke-width: 1.5; color: var(--text-secondary); }
+  .refresh-btn-outline:active { background: var(--brand-purple-click); border-color: var(--brand-purple-click); color: white; }
+  .refresh-btn-outline:active svg { color: white; }
+  .icon-btn-grey { width: 40px; height: 40px; border-radius: 10px; background: var(--button-small-bg); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .icon-btn-grey svg { width: 20px; height: 20px; color: var(--text-secondary); stroke-width: 1.5; }
+  .icon-btn-grey:active { background: var(--brand-purple-click); }
+  .icon-btn-grey:active svg { color: white; }
 
-  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px; }
-  .stat-card { background: white; border-radius: 14px; padding: 16px 18px; }
-  .stat-label { display: flex; justify-content: space-between; font-size: 12px; color: #8a8790; margin-bottom: 8px; }
-  .stat-delta { color: #16a34a; }
-  .stat-value { font-size: 22px; font-weight: 500; color: #1c1a20; margin-bottom: 4px; }
-  .stat-meta { font-size: 11px; color: #8a8790; }
+  .stat-grid { display: flex; gap: 16px; margin-bottom: 16px; }
+  .stat-card { background: var(--surface); border-radius: 16px; padding: 20px 24px; flex: 1; min-width: 0; height: 168px; box-sizing: border-box; }
+  .stat-card-content { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+  .stat-header-content { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+  .stat-header-row { display: flex; align-items: flex-start; gap: 8px; width: 100%; }
+  .stat-title { flex: 1; min-width: 0; font-size: 16px; font-weight: 500; color: var(--text-main); }
+  .stat-positive-label { display: flex; align-items: center; gap: 4px; background: var(--label-positive-bg); color: var(--label-positive-text); font-size: 14px; font-weight: 500; height: 24px; padding: 4px 8px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
+  .stat-positive-label svg { stroke-width: 1.5; }
+  .stat-value { font-size: 32px; font-weight: 500; color: var(--text-main); line-height: 40px; }
+  .stat-footer-content { display: flex; flex-direction: column; gap: 4px; height: 44px; justify-content: flex-end; font-size: 14px; color: var(--text-secondary); width: 100%; }
+  .stat-meta-row { display: flex; gap: 8px; align-items: center; white-space: nowrap; }
+  .stat-meta-label-fixed { width: 90px; flex-shrink: 0; }
 
-  .row-2col { display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; margin-bottom: 16px; }
-  .card { background: white; border-radius: 14px; padding: 18px; }
-  .card-title { font-size: 13px; color: #4a4650; margin-bottom: 12px; font-weight: 500; }
+  .row-2col { display: flex; gap: 16px; margin-bottom: 16px; }
+  .row-2col .card { height: 365px; box-sizing: border-box; }
+  .card { background: var(--surface); border-radius: 16px; padding: 24px; flex: 1; min-width: 0; box-sizing: border-box; }
+  .card-title { font-size: 18px; font-weight: 500; color: var(--text-main); margin-bottom: 24px; }
 
-  .balances-table { width: 100%; font-size: 12px; border-collapse: collapse; }
-  .balances-table th { text-align: left; color: #8a8790; font-weight: 400; padding: 6px 4px; border-bottom: 1px solid #eee; }
-  .balances-table td { padding: 8px 4px; border-bottom: 1px solid #f4f3f6; color: #1c1a20; }
-  .balances-table .amt-avail { color: #16a34a; }
-  .balances-table .amt-hold { color: #e0a020; }
+  .chart-wrap { display: flex; gap: 8px; margin-bottom: 26px; }
+  .chart-y-axis { display: flex; flex-direction: column; justify-content: space-between; height: 228px; font-size: 12px; font-weight: 500; color: var(--text-secondary); text-align: right; width: 46px; flex-shrink: 0; }
+  .chart-plot-area { position: relative; flex: 1; min-width: 0; }
+  .chart-hover-point { position: absolute; top: 0; bottom: 0; width: 24px; transform: translateX(-50%); cursor: pointer; }
+  .chart-guide-line {
+    position: absolute; left: 50%; top: 0; bottom: 0; width: 0;
+    border-left: 1.5px dashed #b481ff; transform: translateX(-50%);
+    opacity: 0; transition: opacity 0.1s;
+  }
+  .chart-hover-point:hover .chart-guide-line { opacity: 1; }
+  .chart-dot {
+    position: absolute; left: 50%; width: 8px; height: 8px; border-radius: 50%;
+    background: #a663ff; border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    transform: translate(-50%, -50%); opacity: 0; transition: opacity 0.1s; pointer-events: none;
+  }
+  .chart-hover-point:hover .chart-dot { opacity: 1; }
+  .chart-tooltip {
+    position: absolute; left: calc(50% + 12px); top: -8px; transform: translateY(-100%);
+    background: var(--surface); border: 1px solid var(--outline); border-radius: 8px;
+    padding: 8px 8px 8px 12px; width: 164px; box-sizing: border-box;
+    opacity: 0; pointer-events: none; transition: opacity 0.1s; box-shadow: 0 4px 12px rgba(26,46,74,0.12);
+  }
+  .chart-tooltip-left { left: auto; right: calc(50% + 12px); }
+  .chart-hover-point:hover .chart-tooltip { opacity: 1; }
+  .tooltip-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 4px; }
+  .tooltip-date { font-size: 12px; color: var(--text-secondary); }
+  .tooltip-label { background: var(--label-positive-bg); color: var(--label-positive-text); font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 100px; }
+  .tooltip-value { font-size: 14px; font-weight: 500; color: var(--text-main); }
+  .chart-date-label {
+    position: absolute; top: calc(100% + 18px); left: 50%; transform: translateX(-50%);
+    font-size: 12px; font-weight: 500; color: var(--text-secondary); white-space: nowrap;
+  }
 
-  .funnel-row { display: flex; gap: 32px; }
-  .funnel-col { flex: 1; }
-  .funnel-num { font-size: 26px; font-weight: 500; color: #1c1a20; }
-  .funnel-pct { font-size: 12px; color: #8a8790; margin-left: 6px; }
-  .funnel-sub { font-size: 11px; color: #8a8790; margin-top: 4px; }
+  .balances-content { border: 1px solid var(--outline); border-radius: 8px; overflow: hidden; }
+  .balances-header {
+    display: flex; gap: 16px; align-items: center; width: 100%;
+    background: var(--background-muted); border-bottom: 1px solid var(--outline);
+    padding: 8px 20px; font-size: 14px; font-weight: 400; color: var(--text-secondary);
+  }
+  .balances-row {
+    display: flex; gap: 16px; align-items: center; width: 100%; height: 48px; box-sizing: border-box;
+    padding: 10px 20px; font-size: 16px; font-weight: 500; color: var(--text-main);
+    border-bottom: 1px solid var(--outline);
+  }
+  .balances-row-last { border-bottom: none; }
+  .bal-col-project { flex: 1; min-width: 0; }
+  .bal-col-num { width: 120px; flex-shrink: 0; text-align: right; }
+  .amt-avail { color: var(--amt-avail); }
+  .amt-hold { color: var(--amt-hold); }
+  .balances-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+  .balances-pagination { display: flex; align-items: center; gap: 16px; }
+  .page-controls { display: flex; align-items: center; gap: 4px; }
+  .page-btn { width: 32px; height: 32px; border-radius: 10px; border: none; background: transparent; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 4px; box-sizing: border-box; }
+  .page-btn svg { width: 24px; height: 24px; }
+  .page-btn-disabled svg { opacity: 0.3; }
+  .page-btn-active svg { opacity: 1; }
+  .page-btn:active { background: var(--brand-purple-click); }
+  .page-btn:active svg { color: white; opacity: 1; }
+  .page-info { display: flex; gap: 4px; font-size: 14px; font-weight: 400; color: var(--text-secondary); white-space: nowrap; }
+  .balances-summary { display: flex; align-items: center; gap: 16px; }
+  .summary-label { font-size: 14px; font-weight: 500; color: var(--text-main); white-space: nowrap; }
+  .summary-amounts { display: flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 500; white-space: nowrap; }
+  .summary-slash { font-size: 14px; color: var(--outline); }
+  .summary-mid { color: var(--text-main); }
 
-  .donut-row { display: flex; gap: 14px; }
-  .donut-card { flex: 1; background: white; border-radius: 14px; padding: 18px; display: flex; align-items: center; gap: 20px; }
-  .donut { width: 100px; height: 100px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; position: relative; }
-  .donut-center { text-align: center; }
-  .donut-total { font-size: 20px; font-weight: 500; color: #1c1a20; }
-  .donut-sub { font-size: 10px; color: #8a8790; }
-  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #4a4650; margin-bottom: 6px; }
-  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
-  .legend-value { margin-left: auto; font-weight: 500; color: #1c1a20; }
+  .funnel-row { display: flex; height: 268px; position: relative; }
+  .funnel-col { flex: 1; min-width: 0; border: 1px solid var(--outline); border-top: none; padding: 0 24px 0; margin-right: -1px; position: relative; box-sizing: border-box; overflow: hidden; }
+  .funnel-col:last-child { margin-right: 0; }
+  .funnel-label { font-size: 16px; font-weight: 400; color: var(--text-main); height: 24px; margin-top: 0; }
+  .funnel-num-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .funnel-col:not(:first-child) .funnel-num-row { gap: 16px; }
+  .funnel-num { font-size: 32px; font-weight: 500; color: var(--text-main); }
+  .funnel-pct { background: var(--background-muted); border-radius: 100px; padding: 4px 12px; height: 28px; box-sizing: border-box; display: flex; align-items: center; font-size: 14px; font-weight: 500; color: var(--text-main); }
+  .funnel-prev-block { margin-top: 16px; }
+  .funnel-prev { font-size: 14px; color: var(--text-secondary); }
+  .funnel-prev-val { font-size: 16px; font-weight: 500; color: var(--text-main); margin-top: 4px; }
+  .funnel-wave-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 134px; pointer-events: none; }
 
-  .back-link { text-align: center; padding: 12px; font-size: 12px; color: #8a4bff; cursor: pointer; background: white; border-top: 1px solid #eee; }
+  .donut-row { display: flex; gap: 16px; }
+  .donut-card-title { font-size: 18px; font-weight: 500; color: var(--text-main); margin-bottom: 24px; }
+  .donut-body { display: flex; align-items: center; gap: 40px; justify-content: center; }
+  .donut-svg-wrap { position: relative; width: 240px; height: 240px; flex-shrink: 0; }
+  .donut-seg { cursor: pointer; transition: d 0.15s ease; }
+  .donut-seg-text { opacity: 0; transition: opacity 0.12s ease; pointer-events: none; fill: white; font-size: 12px; font-weight: 700; font-family: 'DM Sans', sans-serif; text-anchor: middle; dominant-baseline: central; }
+  .donut-seg-group:hover .donut-seg-text { opacity: 1; }
+  .donut-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; }
+  .donut-total { font-size: 32px; font-weight: 500; color: var(--text-main); }
+  .donut-sub { font-size: 16px; color: var(--text-secondary); }
+  .legend-list { display: flex; flex-direction: column; gap: 16px; flex: 1; max-width: 240px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 16px; }
+  .legend-dot { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; }
+  .legend-label { color: var(--text-secondary); flex: 1; }
+  .legend-value { font-weight: 500; color: var(--text-main); }
+  .legend-divider { height: 1px; background: var(--outline); }
+
+  .back-link { position: fixed; bottom: 16px; right: 16px; z-index: 100; padding: 8px 16px; font-size: 12px; color: var(--brand-purple-main); cursor: pointer; background: var(--surface); border: 1px solid var(--outline); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 </style>
 </head>
 <body>
@@ -252,115 +393,376 @@
 <div id="screen-dashboard" class="screen">
   <div style="display:flex;width:100%;">
     <div class="sidebar">
-      <div class="sidebar-logo">FLEXIFAI</div>
-      <div class="nav-item active">🏠 Home</div>
-      <div class="nav-section-label">Payments</div>
-      <div class="nav-item">⇄ PayOut</div>
-      <div class="nav-item">⇣ PayIn</div>
-      <div class="nav-section-label">Merchants</div>
-      <div class="nav-item">👥 Merchants</div>
-      <div class="nav-item">▤ Projects</div>
-      <div class="nav-item">▭ Balances</div>
-      <div class="nav-section-label">Settings</div>
-      <div class="nav-item">⚙ System</div>
+      <div>
+        <div class="sidebar-logo-row">
+          <svg width="176" height="20" viewBox="0 0 176 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+<path d="M112.325 0.0775241H106.85V19.845H112.325V0.0775241Z" fill="white"/>
+<path d="M31.1776 0.0775241H25.7031V19.8837H42.6702V15.0775H31.1776V0.0775241Z" fill="white"/>
+<path d="M176 0.0775241H170.525V19.845H176V0.0775241Z" fill="white"/>
+<path d="M149.443 0.0775241L139.736 19.845H145.211L147.152 15.8915H157.208L159.149 19.845H164.624L154.917 0.0775241H149.443ZM149.482 11.1628L152.161 5.65892L154.84 11.1628H149.443H149.482Z" fill="white"/>
+<path d="M0 8.83722H4.07677C2.7955 10.2326 1.3201 11.6279 0 13.062V19.8837H5.47452V13.9922H16.3459V8.79845C12.7351 8.79845 9.08537 8.79845 5.47452 8.79845V5.27132H19.2191V0.116286H0C0 3.02326 0 5.93024 0 8.83722Z" fill="white"/>
+<path d="M118.809 8.83722H122.886C121.604 10.2326 120.09 11.6279 118.809 13.062V19.8837H124.283V13.9922H135.155V8.79845C131.544 8.79845 127.894 8.79845 124.283 8.79845V5.27132H138.028V0.116286H118.809C118.809 3.02326 118.809 5.93024 118.809 8.83722Z" fill="white"/>
+<path d="M49.193 8.02326H53.2698C51.9885 9.41861 50.4355 10.8527 49.1542 12.2481C49.1542 14.7674 49.1542 17.3256 49.1542 19.845H68.3344V15.0388H54.6675V12.6357H65.5389V7.94574C61.9281 7.94574 58.2784 7.94574 54.6675 7.94574V4.88372H68.3344V0.0775241H49.193C49.193 2.75194 49.193 5.3876 49.193 8.02326Z" fill="white"/>
+<path d="M93.5328 0C91.3197 2.28682 89.1066 4.57365 86.8934 6.89923L86.8158 6.97674L86.777 6.89923L81.7684 0H74.2749L79.3223 6.89923L79.5941 7.28683C79.7882 7.59691 79.9823 7.86822 80.1765 8.1783H85.6898L74.2749 20H81.5742L88.6795 12.8295C88.6795 12.8682 93.5716 20 93.5716 20H100.987L95.3576 12.0543C95.2799 11.938 95.2023 11.7829 95.0858 11.6279H89.8054L101.065 0H93.4939H93.5328Z" fill="white"/>
+</svg>
+          <button class="collapse-btn" aria-label="Collapse menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+          </button>
+        </div>
+        <div class="nav-items">
+        <div class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Home
+        </div>
+        <div class="nav-section">
+        <div class="nav-section-label">Payments</div>
+        <div class="nav-options">
+        <div class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3-4 4 4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg>
+          PayOut
+        </div>
+        <div class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 8v8"/><path d="m8 12 4 4 4-4"/></svg>
+          PayIn
+        </div>
+        </div>
+        </div>
+        <div class="nav-section">
+        <div class="nav-section-label">Merchants</div>
+        <div class="nav-options">
+        <div class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Merchants
+        </div>
+        <div class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+          Projects
+        </div>
+        <div class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+          Balances
+        </div>
+        </div>
+        </div>
+        <div class="nav-section">
+        <div class="nav-section-label">Settings</div>
+        <div class="nav-options">
+        <div class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Access Control
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>
       <div class="sidebar-footer">
-        <div class="avatar">CF</div>
-        <div>
-          <div style="font-size:13px;">Christian Friendly</div>
-          <div style="font-size:11px;color:#8a8790;">Consultant</div>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-footer-items">
+          <div class="avatar">CF</div>
+          <div>
+            <div class="footer-name">Christian Friendly</div>
+            <div class="footer-role">Consultant</div>
+          </div>
         </div>
       </div>
     </div>
     <div class="main-content">
-      <div class="toolbar">
-        <div style="display:flex;gap:10px;">
-          <div class="pill-select">30 May - 30 Apr ▾</div>
-          <div class="pill-select">EUR ▾</div>
-          <div class="pill-select">All projects ▾</div>
+      <div class="top-bar">
+        <div class="filters">
+          <div class="date-select">30 May-30 Apr
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="filter-group">
+            <div class="pill-select">EUR
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+            <div class="filter-select">All projects
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+          </div>
         </div>
-        <div class="toolbar-right">
-          <span id="last-update">Last update: —</span>
-          <button class="refresh-btn" onclick="refreshTimestamp()">⟳</button>
+        <div class="last-update-row">
+          <button class="icon-btn-grey" id="theme-toggle-btn" aria-label="Toggle theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          </button>
         </div>
       </div>
 
       <div class="stat-grid">
         <div class="stat-card">
-          <div class="stat-label"><span>Turnover today</span><span class="stat-delta">+12% ↗</span></div>
-          <div class="stat-value">150.00 EUR</div>
-          <div class="stat-meta">Average daily: 0 EUR</div>
+          <div class="stat-card-content">
+            <div class="stat-header-content">
+              <div class="stat-header-row">
+                <span class="stat-title">Turnover today</span>
+                <span class="stat-positive-label">+ 12%
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M17 7 7 17"/><path d="M8 7h9v9"/></svg>
+                </span>
+              </div>
+              <div class="stat-value">150.00 EUR</div>
+            </div>
+            <div class="stat-footer-content">
+              <div class="stat-meta-row"><span>Average daily:</span><span>0 EUR</span></div>
+              <div class="stat-meta-row"><span class="stat-meta-label-fixed">Transactions:</span><span>0</span></div>
+            </div>
+          </div>
         </div>
         <div class="stat-card">
-          <div class="stat-label"><span>Turnover 7 days</span><span class="stat-delta">+12% ↗</span></div>
-          <div class="stat-value">210.00 EUR</div>
-          <div class="stat-meta">Average daily: 0 EUR</div>
+          <div class="stat-card-content">
+            <div class="stat-header-content">
+              <div class="stat-header-row">
+                <span class="stat-title">Turnover 7 days</span>
+                <span class="stat-positive-label">+ 12%
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M17 7 7 17"/><path d="M8 7h9v9"/></svg>
+                </span>
+              </div>
+              <div class="stat-value">210.00 EUR</div>
+            </div>
+            <div class="stat-footer-content">
+              <div class="stat-meta-row"><span>Average daily:</span><span>0 EUR</span></div>
+              <div class="stat-meta-row"><span class="stat-meta-label-fixed">Transactions:</span><span>0</span></div>
+            </div>
+          </div>
         </div>
         <div class="stat-card">
-          <div class="stat-label"><span>Turnover 30 days</span><span class="stat-delta">+12% ↗</span></div>
-          <div class="stat-value">670.00 EUR</div>
-          <div class="stat-meta">Average daily: 0 EUR</div>
+          <div class="stat-card-content">
+            <div class="stat-header-content">
+              <div class="stat-header-row">
+                <span class="stat-title">Turnover 30 days</span>
+                <span class="stat-positive-label">+ 12%
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M17 7 7 17"/><path d="M8 7h9v9"/></svg>
+                </span>
+              </div>
+              <div class="stat-value">670.00 EUR</div>
+            </div>
+            <div class="stat-footer-content">
+              <div class="stat-meta-row"><span>Average daily:</span><span>0 EUR</span></div>
+              <div class="stat-meta-row"><span class="stat-meta-label-fixed">Transactions:</span><span>0</span></div>
+            </div>
+          </div>
         </div>
         <div class="stat-card">
-          <div class="stat-label"><span>Average check</span></div>
-          <div class="stat-value">0.00 EUR</div>
-          <div class="stat-meta">Median: 10</div>
+          <div class="stat-card-content">
+            <div class="stat-header-content">
+              <div class="stat-header-row"><span class="stat-title">Average check</span></div>
+              <div class="stat-value">0.00 EUR</div>
+            </div>
+            <div class="stat-footer-content">
+              <div class="stat-meta-row"><span>Median:</span><span>10</span></div>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="row-2col">
         <div class="card">
           <div class="card-title">Volume dynamic, EUR</div>
-          <svg viewBox="0 0 400 140" style="width:100%;height:140px;">
-            <polyline points="0,90 40,70 80,85 120,60 160,75 200,50 240,65 280,40 320,55 360,30 400,45" fill="none" stroke="#a663ff" stroke-width="2"/>
-            <polygon points="0,90 40,70 80,85 120,60 160,75 200,50 240,65 280,40 320,55 360,30 400,45 400,140 0,140" fill="rgba(166,99,255,0.15)"/>
-          </svg>
+          <div class="chart-wrap">
+            <div class="chart-y-axis">
+              <span>200.00</span><span>160.00</span><span>120.00</span><span>80.00</span><span>40.00</span><span>0</span>
+            </div>
+            <div class="chart-plot-area">
+              <svg viewBox="0 0 638 228" preserveAspectRatio="none" style="width:100%;height:228px;display:block;">
+                <defs>
+                  <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#a663ff" stop-opacity="0.5"/>
+                    <stop offset="45%" stop-color="#a663ff" stop-opacity="0.22"/>
+                    <stop offset="100%" stop-color="#a663ff" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <line x1="0" y1="0" x2="638" y2="0" stroke="#cccccc" stroke-dasharray="3 4"/>
+                <line x1="0" y1="42" x2="638" y2="42" stroke="#cccccc" stroke-dasharray="3 4"/>
+                <line x1="0" y1="84" x2="638" y2="84" stroke="#cccccc" stroke-dasharray="3 4"/>
+                <line x1="0" y1="127" x2="638" y2="127" stroke="#cccccc" stroke-dasharray="3 4"/>
+                <line x1="0" y1="169" x2="638" y2="169" stroke="#cccccc" stroke-dasharray="3 4"/>
+                <line x1="0" y1="227" x2="638" y2="227" stroke="#cccccc" stroke-dasharray="3 4"/>
+                <line x1="0" y1="0" x2="0" y2="228" stroke="#cccccc" stroke-dasharray="3 4"/>
+                <path d="M 0,137 C 15.17,133.67 60.67,115.33 91,117 C 121.33,118.67 151.67,152.00 182,147 C 212.33,142.00 242.67,90.33 273,87 C 303.33,83.67 333.67,132.00 364,127 C 394.33,122.00 424.67,62.00 455,57 C 485.33,52.00 515.50,103.67 546,97 C 576.50,90.33 622.67,30.33 638,17" fill="none" stroke="#a663ff" stroke-width="2"/>
+                <path d="M 0,137 C 15.17,133.67 60.67,115.33 91,117 C 121.33,118.67 151.67,152.00 182,147 C 212.33,142.00 242.67,90.33 273,87 C 303.33,83.67 333.67,132.00 364,127 C 394.33,122.00 424.67,62.00 455,57 C 485.33,52.00 515.50,103.67 546,97 C 576.50,90.33 622.67,30.33 638,17 L 638,228 L 0,228 Z" fill="url(#areaFill)" stroke="none"/>
+              </svg>
+              <div class="chart-hover-point" style="left:0%;">
+                <div class="chart-guide-line"></div>
+                <div class="chart-date-label">30 Mar</div>
+                <div class="chart-dot" style="top:60.09%;"></div>
+                <div class="chart-tooltip" style="top:60.09%;"><div class="tooltip-row"><span class="tooltip-date">30 Mar</span><span class="tooltip-label">+ 12%</span></div><div class="tooltip-value">80.00 EUR</div></div>
+              </div>
+              <div class="chart-hover-point" style="left:14.26%;">
+                <div class="chart-guide-line"></div>
+                <div class="chart-date-label">1 Apr</div>
+                <div class="chart-dot" style="top:51.32%;"></div>
+                <div class="chart-tooltip" style="top:51.32%;"><div class="tooltip-row"><span class="tooltip-date">1 Apr</span><span class="tooltip-label">+ 12%</span></div><div class="tooltip-value">98.00 EUR</div></div>
+              </div>
+              <div class="chart-hover-point" style="left:28.53%;">
+                <div class="chart-guide-line"></div>
+                <div class="chart-date-label">5 Apr</div>
+                <div class="chart-dot" style="top:64.47%;"></div>
+                <div class="chart-tooltip" style="top:64.47%;"><div class="tooltip-row"><span class="tooltip-date">5 Apr</span><span class="tooltip-label">+ 12%</span></div><div class="tooltip-value">70.00 EUR</div></div>
+              </div>
+              <div class="chart-hover-point" style="left:42.79%;">
+                <div class="chart-guide-line"></div>
+                <div class="chart-date-label">10 Apr</div>
+                <div class="chart-dot" style="top:38.16%;"></div>
+                <div class="chart-tooltip" style="top:38.16%;"><div class="tooltip-row"><span class="tooltip-date">10 Apr</span><span class="tooltip-label">+ 12%</span></div><div class="tooltip-value">120.00 EUR</div></div>
+              </div>
+              <div class="chart-hover-point" style="left:57.05%;">
+                <div class="chart-guide-line"></div>
+                <div class="chart-date-label">15 Apr</div>
+                <div class="chart-dot" style="top:55.70%;"></div>
+                <div class="chart-tooltip" style="top:55.70%;"><div class="tooltip-row"><span class="tooltip-date">15 Apr</span><span class="tooltip-label">+ 12%</span></div><div class="tooltip-value">90.00 EUR</div></div>
+              </div>
+              <div class="chart-hover-point" style="left:71.32%;">
+                <div class="chart-guide-line"></div>
+                <div class="chart-date-label">20 Apr</div>
+                <div class="chart-dot" style="top:25.00%;"></div>
+                <div class="chart-tooltip" style="top:25.00%;"><div class="tooltip-row"><span class="tooltip-date">20 Apr</span><span class="tooltip-label">+ 12%</span></div><div class="tooltip-value">150.00 EUR</div></div>
+              </div>
+              <div class="chart-hover-point" style="left:85.58%;">
+                <div class="chart-guide-line"></div>
+                <div class="chart-date-label">25 Apr</div>
+                <div class="chart-dot" style="top:42.54%;"></div>
+                <div class="chart-tooltip chart-tooltip-left" style="top:42.54%;"><div class="tooltip-row"><span class="tooltip-date">25 Apr</span><span class="tooltip-label">+ 12%</span></div><div class="tooltip-value">115.00 EUR</div></div>
+              </div>
+              <div class="chart-hover-point" style="left:100%;">
+                <div class="chart-guide-line"></div>
+                <div class="chart-date-label">30 Apr</div>
+                <div class="chart-dot" style="top:7.46%;"></div>
+                <div class="chart-tooltip chart-tooltip-left" style="top:7.46%;"><div class="tooltip-row"><span class="tooltip-date">30 Apr</span><span class="tooltip-label">+ 12%</span></div><div class="tooltip-value">180.00 EUR</div></div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="card">
           <div class="card-title">Balances, EUR</div>
-          <table class="balances-table">
-            <tr><th>Project</th><th>Available</th><th>Actual</th><th>On hold</th></tr>
-            <tr><td>PJ_Andrash_test_routing</td><td class="amt-avail">100.00</td><td>1000.00</td><td class="amt-hold">0.00</td></tr>
-            <tr><td>PJ_Andrash_test_routing</td><td class="amt-avail">100.00</td><td>100.00</td><td class="amt-hold">0.00</td></tr>
-            <tr><td>PJ_Andrash_test_routing</td><td class="amt-avail">100.00</td><td>100.00</td><td class="amt-hold">0.00</td></tr>
-            <tr><td>PJ_Andrash_test_routing</td><td class="amt-avail">100.00</td><td>100.00</td><td class="amt-hold">0.00</td></tr>
-          </table>
+          <div class="balances-content">
+            <div class="balances-header">
+              <span class="bal-col-project">Project</span>
+              <span class="bal-col-num">Available</span>
+              <span class="bal-col-num">Actual</span>
+              <span class="bal-col-num">On hold</span>
+            </div>
+            <div class="balances-row">
+              <span class="bal-col-project">PJ_Nova_checkout_flow</span>
+              <span class="bal-col-num amt-avail">100.00</span>
+              <span class="bal-col-num">1&nbsp;000.00</span>
+              <span class="bal-col-num amt-hold">0.00</span>
+            </div>
+            <div class="balances-row">
+              <span class="bal-col-project">PJ_Kestrel_billing_eu</span>
+              <span class="bal-col-num amt-avail">100.00</span>
+              <span class="bal-col-num">100.00</span>
+              <span class="bal-col-num amt-hold">0.00</span>
+            </div>
+            <div class="balances-row">
+              <span class="bal-col-project">PJ_Lumen_payouts_v2</span>
+              <span class="bal-col-num amt-avail">100.00</span>
+              <span class="bal-col-num">100.00</span>
+              <span class="bal-col-num amt-hold">0.00</span>
+            </div>
+            <div class="balances-row balances-row-last">
+              <span class="bal-col-project">PJ_Aster_wallet_sync</span>
+              <span class="bal-col-num amt-avail">100.00</span>
+              <span class="bal-col-num">100.00</span>
+              <span class="bal-col-num amt-hold">0.00</span>
+            </div>
+          </div>
+          <div class="balances-footer">
+            <div class="balances-pagination">
+              <div class="page-controls">
+                <button class="page-btn page-btn-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                <button class="page-btn page-btn-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+              </div>
+              <div class="page-info"><span>Page</span><span>1</span><span>of</span><span>2</span></div>
+            </div>
+            <div class="balances-summary">
+              <span class="summary-label">Summary by currency (EUR):</span>
+              <span class="summary-amounts">
+                <span class="amt-avail">400.00</span><span class="summary-slash">/</span><span class="summary-mid">1&nbsp;300.00</span><span class="summary-slash">/</span><span class="amt-hold">0.00</span>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="card" style="margin-bottom:16px;">
         <div class="card-title">Approval rate funnel</div>
         <div class="funnel-row">
-          <div class="funnel-col"><span class="funnel-num">55</span><span class="funnel-pct">100%</span><div class="funnel-sub">Initiated</div></div>
-          <div class="funnel-col"><span class="funnel-num">30</span><span class="funnel-pct">54%</span><div class="funnel-sub">Attempted Payment · From previous 54.5%</div></div>
-          <div class="funnel-col"><span class="funnel-num">3</span><span class="funnel-pct">5.5%</span><div class="funnel-sub">Successful · From previous 10%</div></div>
+          <div class="funnel-col">
+            <div class="funnel-label">Initiated</div>
+            <div class="funnel-num-row"><span class="funnel-num">55</span><span class="funnel-pct">100%</span></div>
+          </div>
+          <div class="funnel-col">
+            <div class="funnel-label">Attempted Payment</div>
+            <div class="funnel-num-row"><span class="funnel-num">30</span><span class="funnel-pct">54%</span></div>
+            <div class="funnel-prev-block">
+              <div class="funnel-prev">From previous</div>
+              <div class="funnel-prev-val">54.5 %</div>
+            </div>
+          </div>
+          <div class="funnel-col">
+            <div class="funnel-label">Successful</div>
+            <div class="funnel-num-row"><span class="funnel-num">3</span><span class="funnel-pct">5.5%</span></div>
+            <div class="funnel-prev-block">
+              <div class="funnel-prev">From previous</div>
+              <div class="funnel-prev-val">10 %</div>
+            </div>
+          </div>
+          <svg class="funnel-wave-overlay" viewBox="0 0 1456 134" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="funnelFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#a663ff" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#a663ff" stop-opacity="0.05"/>
+              </linearGradient>
+            </defs>
+            <path d="M 0,14 C 20.0,15.0 78.3,20.3 120,20 C 161.7,19.7 210.0,11.7 250,12 C 290.0,12.3 320.8,18.3 360,22 C 399.2,25.7 445.0,30.3 485,34 C 525.0,37.7 555.8,43.7 600,44 C 644.2,44.3 700.0,35.0 750,36 C 800.0,37.0 863.3,47.3 900,50 C 936.7,52.7 936.7,50.7 970,52 C 1003.3,53.3 1053.3,58.3 1100,58 C 1146.7,57.7 1190.7,49.3 1250,50 C 1309.3,50.7 1421.7,60.0 1456,62" fill="none" stroke="#b481ff" stroke-width="2"/>
+            <path d="M 0,14 C 20.0,15.0 78.3,20.3 120,20 C 161.7,19.7 210.0,11.7 250,12 C 290.0,12.3 320.8,18.3 360,22 C 399.2,25.7 445.0,30.3 485,34 C 525.0,37.7 555.8,43.7 600,44 C 644.2,44.3 700.0,35.0 750,36 C 800.0,37.0 863.3,47.3 900,50 C 936.7,52.7 936.7,50.7 970,52 C 1003.3,53.3 1053.3,58.3 1100,58 C 1146.7,57.7 1190.7,49.3 1250,50 C 1309.3,50.7 1421.7,60.0 1456,62 L 1456,134 L 0,134 Z" fill="url(#funnelFill)" stroke="none"/>
+          </svg>
         </div>
       </div>
 
       <div class="donut-row">
-        <div class="donut-card">
-          <div class="donut" style="background: conic-gradient(#7c5cff 0% 68.7%, #4ade80 68.7% 71.8%, #60a5fa 71.8% 100%);">
-            <div class="donut" style="width:64px;height:64px;background:white;">
+        <div class="card" style="flex:1;">
+          <div class="donut-card-title">Payment methods</div>
+          <div class="donut-body">
+            <div class="donut-svg-wrap">
+              <svg viewBox="0 0 240 240" width="240" height="240" overflow="visible">
+                <g class="donut-seg-group"><path class="donut-seg" data-hover-d="M 126.80,-17.83 A 138,138 0 1 1 -4.59,179.33 A 5,5 0 0 1 -2.07,172.80 L 43.82,152.95 A 5,5 0 0 1 50.54,155.49 A 78,78 0 1 0 126.02,42.23 A 5,5 0 0 1 121.09,37.01 L 121.74,-12.99 A 5,5 0 0 1 126.80,-17.83 Z" d="M 125.57,0.13 A 120,120 0 1 1 11.51,171.28 A 4,4 0 0 1 13.53,166.05 L 53.92,148.58 A 4,4 0 0 1 59.28,150.62 A 68,68 0 1 0 124.89,52.18 A 4,4 0 0 1 120.94,48.01 L 121.52,4.01 A 4,4 0 0 1 125.57,0.13 Z" fill="#49c46e"/><text class="donut-seg-text" x="209.87" y="179.89">68.71%</text></g>
+                <g class="donut-seg-group"><path class="donut-seg" data-hover-d="M -9.83,166.77 A 138,138 0 0 1 -13.65,154.37 A 5,5 0 0 1 -9.92,148.44 L 38.92,137.75 A 5,5 0 0 1 45.03,141.52 A 78,78 0 0 0 45.91,144.38 A 5,5 0 0 1 42.98,150.94 L -3.41,169.58 A 5,5 0 0 1 -9.83,166.77 Z" d="M 7.22,161.00 A 120,120 0 0 1 3.69,149.55 A 4,4 0 0 1 6.68,144.80 L 49.66,135.39 A 4,4 0 0 1 54.54,138.42 A 68,68 0 0 0 55.52,141.60 A 4,4 0 0 1 53.19,146.84 L 12.36,163.24 A 4,4 0 0 1 7.22,161.00 Z" fill="#8f86e8"/><text class="donut-seg-text" x="16.78" y="151.79">3.07%</text></g>
+                <g class="donut-seg-group"><path class="donut-seg" data-hover-d="M -16.39,141.04 A 138,138 0 0 1 113.20,-17.83 A 5,5 0 0 1 118.26,-12.99 L 118.91,37.01 A 5,5 0 0 1 113.98,42.23 A 78,78 0 0 0 42.61,129.74 A 5,5 0 0 1 38.48,135.62 L -10.62,145.02 A 5,5 0 0 1 -16.39,141.04 Z" d="M 1.46,138.64 A 120,120 0 0 1 114.43,0.13 A 4,4 0 0 1 118.48,4.01 L 119.06,48.01 A 4,4 0 0 1 115.11,52.18 A 68,68 0 0 0 52.58,128.85 A 4,4 0 0 1 49.29,133.55 L 6.07,141.83 A 4,4 0 0 1 1.46,138.64 Z" fill="#5c9de1"/><text class="donut-seg-text" x="36.31" y="51.74">28.22%</text></g>
+              </svg>
               <div class="donut-center"><div class="donut-total">326</div><div class="donut-sub">Total payments</div></div>
             </div>
-          </div>
-          <div style="flex:1;">
-            <div class="legend-item"><span class="legend-dot" style="background:#4ade80;"></span>Open banking<span class="legend-value">224</span></div>
-            <div class="legend-item"><span class="legend-dot" style="background:#7c5cff;"></span>Ideal<span class="legend-value">10</span></div>
-            <div class="legend-item"><span class="legend-dot" style="background:#60a5fa;"></span>Card<span class="legend-value">92</span></div>
-          </div>
-        </div>
-        <div class="donut-card">
-          <div class="donut" style="background: conic-gradient(#f5a524 0% 68.2%, #4ade80 68.2% 70.8%, #f43f5e 70.8% 94.9%, #ef4444 94.9% 97.5%, #d4d4d8 97.5% 100%);">
-            <div class="donut" style="width:64px;height:64px;background:white;">
-              <div class="donut-center"><div class="donut-total">930</div><div class="donut-sub">Total transaction</div></div>
+            <div class="legend-list">
+              <div class="legend-item"><span class="legend-dot" style="background:#49c46e;"></span><span class="legend-label">Open banking:</span><span class="legend-value">224</span></div>
+              <div class="legend-divider"></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#8f86e8;"></span><span class="legend-label">Ideal:</span><span class="legend-value">10</span></div>
+              <div class="legend-divider"></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#5c9de1;"></span><span class="legend-label">Card:</span><span class="legend-value">92</span></div>
             </div>
           </div>
-          <div style="flex:1;">
-            <div class="legend-item"><span class="legend-dot" style="background:#f5a524;"></span>Pending<span class="legend-value">634</span></div>
-            <div class="legend-item"><span class="legend-dot" style="background:#4ade80;"></span>Success<span class="legend-value">24</span></div>
-            <div class="legend-item"><span class="legend-dot" style="background:#f43f5e;"></span>Declined<span class="legend-value">224</span></div>
-            <div class="legend-item"><span class="legend-dot" style="background:#ef4444;"></span>Error<span class="legend-value">24</span></div>
-            <div class="legend-item"><span class="legend-dot" style="background:#d4d4d8;"></span>Expired<span class="legend-value">24</span></div>
+        </div>
+        <div class="card" style="flex:1;">
+          <div class="donut-card-title">Transaction statuses</div>
+          <div class="donut-body">
+            <div class="donut-svg-wrap">
+              <svg viewBox="0 0 240 240" width="240" height="240" overflow="visible">
+                <g class="donut-seg-group"><path class="donut-seg" data-hover-d="M 126.80,-17.83 A 138,138 0 1 1 -2.51,183.52 A 5,5 0 0 1 -0.21,176.90 L 44.98,155.51 A 5,5 0 0 1 51.78,157.82 A 78,78 0 1 0 126.02,42.23 A 5,5 0 0 1 121.09,37.01 L 121.74,-12.99 A 5,5 0 0 1 126.80,-17.83 Z" d="M 125.57,0.13 A 120,120 0 1 1 13.31,174.93 A 4,4 0 0 1 15.15,169.63 L 54.92,150.80 A 4,4 0 0 1 60.35,152.66 A 68,68 0 1 0 124.89,52.18 A 4,4 0 0 1 120.94,48.01 L 121.52,4.01 A 4,4 0 0 1 125.57,0.13 Z" fill="#fd9a00"/><text class="donut-seg-text" x="210.87" y="178.36">68.17%</text></g>
+                <g class="donut-seg-group"><path class="donut-seg" data-hover-d="M -8.17,171.15 A 138,138 0 0 1 -11.16,162.91 A 5,5 0 0 1 -7.82,156.75 L 40.23,142.93 A 5,5 0 0 1 46.57,146.31 A 78,78 0 0 0 46.78,146.88 A 5,5 0 0 1 44.08,153.53 L -1.66,173.74 A 5,5 0 0 1 -8.17,171.15 Z" d="M 8.68,164.80 A 120,120 0 0 1 5.84,156.98 A 4,4 0 0 1 8.52,152.05 L 50.80,139.89 A 4,4 0 0 1 55.87,142.60 A 68,68 0 0 0 56.29,143.77 A 4,4 0 0 1 54.14,149.09 L 13.89,166.87 A 4,4 0 0 1 8.68,164.80 Z" fill="#42c87a"/><text class="donut-seg-text" x="18.47" y="156.82">2.58%</text></g>
+                <g class="donut-seg-group"><path class="donut-seg" data-hover-d="M -14.75,149.78 A 138,138 0 0 1 69.63,-8.48 A 5,5 0 0 1 75.97,-5.50 L 92.53,41.68 A 5,5 0 0 1 89.52,48.20 A 78,78 0 0 0 43.40,134.71 A 5,5 0 0 1 39.66,140.84 L -8.74,153.39 A 5,5 0 0 1 -14.75,149.78 Z" d="M 2.90,146.24 A 120,120 0 0 1 76.53,8.15 A 4,4 0 0 1 81.60,10.54 L 96.17,52.06 A 4,4 0 0 1 93.76,57.27 A 68,68 0 0 0 53.29,133.17 A 4,4 0 0 1 50.31,138.08 L 7.72,149.12 A 4,4 0 0 1 2.90,146.24 Z" fill="#e75e82"/><text class="donut-seg-text" x="24.70" y="69.19">24.09%</text></g>
+                <g class="donut-seg-group"><path class="donut-seg" data-hover-d="M 82.53,-12.82 A 138,138 0 0 1 91.03,-14.93 A 5,5 0 0 1 96.81,-10.96 L 105.53,38.27 A 5,5 0 0 1 101.51,44.22 A 78,78 0 0 0 100.92,44.37 A 5,5 0 0 1 94.59,40.99 L 79.27,-6.61 A 5,5 0 0 1 82.53,-12.82 Z" d="M 87.08,4.60 A 120,120 0 0 1 95.15,2.60 A 4,4 0 0 1 99.78,5.78 L 107.45,49.10 A 4,4 0 0 1 104.23,53.85 A 68,68 0 0 0 103.02,54.15 A 4,4 0 0 1 97.95,51.46 L 84.48,9.57 A 4,4 0 0 1 87.08,4.60 Z" fill="#f53942"/><text class="donut-seg-text" x="93.99" y="15.18">2.58%</text></g>
+                <g class="donut-seg-group"><path class="donut-seg" data-hover-d="M 104.46,-17.12 A 138,138 0 0 1 113.20,-17.83 A 5,5 0 0 1 118.26,-12.99 L 118.91,37.01 A 5,5 0 0 1 113.98,42.23 A 78,78 0 0 0 113.38,42.28 A 5,5 0 0 1 107.67,37.92 L 100.25,-11.53 A 5,5 0 0 1 104.46,-17.12 Z" d="M 106.14,0.80 A 120,120 0 0 1 114.43,0.13 A 4,4 0 0 1 118.48,4.01 L 119.06,48.01 A 4,4 0 0 1 115.11,52.18 A 68,68 0 0 0 113.87,52.28 A 4,4 0 0 1 109.31,48.80 L 102.77,5.29 A 4,4 0 0 1 106.14,0.80 Z" fill="#c5c4c0"/><text class="donut-seg-text" x="111.25" y="12.35">2.58%</text></g>
+              </svg>
+              <div class="donut-center"><div class="donut-total">930</div><div class="donut-sub">Total transaction</div></div>
+            </div>
+            <div class="legend-list">
+              <div class="legend-item"><span class="legend-dot" style="background:#fd9a00;"></span><span class="legend-label">Pending:</span><span class="legend-value">634</span></div>
+              <div class="legend-divider"></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#42c87a;"></span><span class="legend-label">Success:</span><span class="legend-value">24</span></div>
+              <div class="legend-divider"></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#e75e82;"></span><span class="legend-label">Declined:</span><span class="legend-value">224</span></div>
+              <div class="legend-divider"></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#f53942;"></span><span class="legend-label">Error:</span><span class="legend-value">24</span></div>
+              <div class="legend-divider"></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#c5c4c0;"></span><span class="legend-label">Expired:</span><span class="legend-value">24</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -371,7 +773,9 @@
 
 <script>
   function fitToScreen() {
-    const scale = window.innerWidth / 1920;
+    const scaleW = window.innerWidth / 1920;
+    const scaleH = window.innerHeight / 1080;
+    const scale = Math.min(scaleW, scaleH);
     document.body.style.transform = 'scale(' + scale + ')';
     document.body.style.transformOrigin = 'top left';
     document.documentElement.style.height = (1080 * scale) + 'px';
@@ -439,11 +843,8 @@
 
   loginBtn.addEventListener('click', function () {
     if (!loginBtn.classList.contains('enabled')) return;
-    // Dashboard redirect temporarily disabled — we're rebuilding the dashboard separately.
-    // To reconnect: uncomment the two lines below.
-    // document.getElementById('screen-login').classList.remove('active');
-    // document.getElementById('screen-dashboard').classList.add('active');
-    // refreshTimestamp();
+    document.getElementById('screen-login').classList.remove('active');
+    document.getElementById('screen-dashboard').classList.add('active');
   });
 
   [emailInput, passwordInput].forEach(function (el) {
@@ -452,13 +853,17 @@
     });
   });
 
-  function refreshTimestamp() {
-    const now = new Date();
-    const pad = n => String(n).padStart(2, '0');
-    document.getElementById('last-update').textContent =
-      'Last update: ' + pad(now.getDate()) + '.' + pad(now.getMonth() + 1) + '.' + now.getFullYear() +
-      ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
-  }
+  document.querySelectorAll('.donut-seg-group').forEach(function (group) {
+    const seg = group.querySelector('.donut-seg');
+    const baseD = seg.getAttribute('d');
+    const hoverD = seg.getAttribute('data-hover-d');
+    group.addEventListener('mouseenter', function () {
+      if (hoverD) seg.setAttribute('d', hoverD);
+    });
+    group.addEventListener('mouseleave', function () {
+      seg.setAttribute('d', baseD);
+    });
+  });
 
   function logOut() {
     document.getElementById('screen-dashboard').classList.remove('active');
