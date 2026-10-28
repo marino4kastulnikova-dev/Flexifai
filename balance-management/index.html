@@ -1261,6 +1261,7 @@ document.getElementById('filepick').addEventListener('change',e=>{addFiles(e.tar
 function bindDrop(){const d=document.getElementById('drop');if(!d)return;
  d.ondragover=e=>{e.preventDefault();d.classList.add('hov')};d.ondragleave=()=>d.classList.remove('hov');d.ondrop=e=>{e.preventDefault();addFiles(e.dataTransfer.files)}}
 
+if(location.hash==='#wallets')S.page='mw';
 render();
 </script>
 </body>

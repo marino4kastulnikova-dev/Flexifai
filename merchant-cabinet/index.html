@@ -174,6 +174,7 @@
   .nav-section { display: flex; flex-direction: column; gap: 24px; }
   .nav-options { display: flex; flex-direction: column; gap: 12px; }
   .nav-section-label { font-size: 12px; color: var(--menu-text-muted); text-transform: uppercase; letter-spacing: 0.24px; }
+  a.nav-item { text-decoration: none; }
   .nav-item {
     display: flex; align-items: center; gap: 16px; padding: 8px 16px; height: 48px; box-sizing: border-box;
     font-size: 16px; color: var(--text-main); cursor: pointer; border-radius: 10px;
@@ -448,6 +449,19 @@
         <div class="nav-item active">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           Home
+        </div>
+        <div class="nav-section">
+        <div class="nav-section-label">Funds</div>
+        <div class="nav-options">
+        <a class="nav-item" href="../balance-management/">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
+          Balance management
+        </a>
+        <a class="nav-item" href="../balance-management/#wallets">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M8 6h8"/><path d="M8 10h8"/><path d="M8 14h4"/></svg>
+          My wallets
+        </a>
+        </div>
         </div>
         <div class="nav-section">
         <div class="nav-section-label">Payments</div>
