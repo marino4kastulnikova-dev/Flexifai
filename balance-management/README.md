@@ -40,7 +40,7 @@ Transfer T0–T4, FT1–FT2, FP1 · Withdraw W0–W5, W1e (crypto only) · Add f
 - Purpose and supporting documents are asked ONLY in Withdraw from a Settlements account (FW1–FW2): purpose chips + upload (PDF, JPG or PNG, up to 10 MB, up to 5 files); Continue needs at least one document. Transfer and crypto Withdraw ask for neither.
 - Withdraw is in the Settlements card menu (in the design, not in the first release).
 - "On hold / Nothing on hold" on cards is plain text without a pill; "Nothing on hold" is muted.
-- "Needs your action" uses the design-system Warning alert style; chips use variant A · Outline (chosen). The Demo panel also switches outline variants B–D and filled variants E–H — same as the Figma frames "VA · Needs your action — chip variants" and "… — filled chip variants".
+- "Needs your action" uses the design-system Warning alert style; chips use variant G · Soft orange fill (as in Figma). The Demo panel also switches outline variants B–D and filled variants E–H — same as the Figma frames "VA · Needs your action — chip variants" and "… — filled chip variants".
 
 ## Not from the mockups (invented or simplified)
 

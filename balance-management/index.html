@@ -87,7 +87,7 @@ tr.r:focus-visible td{background:var(--hover-muted)}
 .nya-chips{display:flex;gap:8px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;padding:1px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent)}
 .nya-chips::-webkit-scrollbar{display:none}
 .nya>.ic{color:var(--orange)}.nya>b{font-weight:500;white-space:nowrap}
-.nya-chip{display:inline-flex;gap:6px;align-items:center;background:var(--background);border-radius:999px;padding:5px 10px;white-space:nowrap;flex:none;font-size:13px}
+.nya-chip{display:inline-flex;gap:8px;align-items:center;background:var(--background);border-radius:999px;padding:6px 12px;white-space:nowrap;flex:none;font-size:14px;line-height:20px}
 .nya-chip b{font-weight:500}.nya-chip .a{color:var(--brand-color);font-weight:500}.nya-chip .m{color:var(--text-secondary)}
 .nya-chip:hover{box-shadow:inset 0 0 0 1px var(--brand-color)}
 .nya-link{color:var(--brand-color);font-weight:500;white-space:nowrap}
@@ -542,7 +542,7 @@ function actionItems(){
 function actionBar(home){
  if(S.ui.loading)return '';
  const it=actionItems();if(!it.length)return '';
- return `<div class="nya v-${(S.ui.chipVar||'A').toLowerCase()}">${I('alert','s16')}<b>Needs your action · ${it.length}</b>
+ return `<div class="nya v-${(S.ui.chipVar||'G').toLowerCase()}">${I('alert','s16')}<b>Needs your action · ${it.length}</b>
   <div class="nya-chips">${it.map(x=>`<button class="nya-chip" data-act="details" data-id="${x.r.id}"><b>${x.r.id}</b><span class="a">${x.act}</span><span class="m">${x.meta}</span></button>`).join('')}</div>
   <button class="nya-link" data-act="showActions">${home?'Open all':'Show in table'}</button></div>`;
 }
@@ -1076,7 +1076,7 @@ function renderDemo(){
   <div class="g">Events</div>
   <div class="bs">${b('dIncoming','Incoming Add funds (USDT)',1)}${b('dFA1','Open FA1 · bank transfer (Soon)',1)}</div>
   <div class="g">Needs your action · chip style</div>
-  <div class="bs">${['A','B','C','D','E','F','G','H'].map(v=>`<button class="db ${(S.ui.chipVar||'A')===v?'on':''}" data-act="dChip" data-v="${v}">${{A:'A · Outline',B:'B · Brand fill',C:'C · Deadline first',D:'D · Brand tint',E:'E · Orange fill',F:'F · Brand fill',G:'G · Soft orange',H:'H · Dark fill'}[v]}</button>`).join('')}</div>
+  <div class="bs">${['A','B','C','D','E','F','G','H'].map(v=>`<button class="db ${(S.ui.chipVar||'G')===v?'on':''}" data-act="dChip" data-v="${v}">${{A:'A · Outline',B:'B · Brand fill',C:'C · Deadline first',D:'D · Brand tint',E:'E · Orange fill',F:'F · Brand fill',G:'G · Soft orange',H:'H · Dark fill'}[v]}</button>`).join('')}</div>
   <div class="g">States</div>
   <div class="bs">${t('failNext','Next submit fails (T2a/W2a)')}${b('dGridFail','Grid failed to load (G3)',1)}${b('dLoading','Loading (overlay)',1)}${t('outdated','Balances outdated')}${b('dZero','Zero balance · EUR Settlements',1)}${b('dNoWallets','Remove all saved wallets (MW5)',S.wallets.length)}${b('dNoNotifs','Clear notifications (NT2)',S.notifs.length)}</div>
  </div></div>`;
