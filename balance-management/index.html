@@ -83,7 +83,7 @@ tr.r:focus-visible td{background:var(--hover-muted)}
 .pchip{height:36px;padding:0 16px;border-radius:999px;border:1px solid var(--outline);background:#fff;display:inline-flex;align-items:center;gap:6px}
 .pchip.on{border-color:var(--brand-color);background:var(--brand-color-muted);color:var(--brand-color)}
 /* Attention blocks */
-.nya{display:flex;align-items:center;gap:10px;background:var(--orange-muted);border-radius:var(--radius-medium);padding:10px 16px;margin-bottom:8px;font-size:14px}
+.nya{display:flex;align-items:center;gap:10px;background:var(--orange-muted);border:.5px solid var(--orange);color:var(--orange-text);border-radius:var(--radius-button);padding:10px 16px;margin-bottom:8px;font-size:14px}
 .nya-chips{display:flex;gap:8px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;padding:1px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent)}
 .nya-chips::-webkit-scrollbar{display:none}
 .nya>.ic{color:var(--orange)}.nya>b{font-weight:500;white-space:nowrap}
@@ -91,6 +91,16 @@ tr.r:focus-visible td{background:var(--hover-muted)}
 .nya-chip b{font-weight:500}.nya-chip .a{color:var(--brand-color);font-weight:500}.nya-chip .m{color:var(--text-secondary)}
 .nya-chip:hover{box-shadow:inset 0 0 0 1px var(--brand-color)}
 .nya-link{color:var(--brand-color);font-weight:500;white-space:nowrap}
+.nya.v-a .nya-chip{box-shadow:inset 0 0 0 1px var(--orange)}
+.nya.v-b .nya-chip{background:var(--brand-color);color:#fff}.nya.v-b .nya-chip .a{color:#fff;text-decoration:underline}.nya.v-b .nya-chip .m{color:rgba(255,255,255,.7)}
+.nya.v-c .nya-chip{box-shadow:0 2px 6px rgba(95,54,10,.16)}.nya.v-c .nya-chip .m{color:var(--orange);font-weight:500}
+.nya.v-d .nya-chip{background:var(--brand-color-muted);box-shadow:inset 0 0 0 1px var(--brand-color)}
+.nya.v-e .nya-chip{background:var(--orange);color:#fff}.nya.v-e .nya-chip .a{color:#fff;text-decoration:underline}.nya.v-e .nya-chip .m{color:rgba(255,255,255,.85)}
+.nya.v-f .nya-chip{background:var(--brand-color);color:#fff}.nya.v-f .nya-chip .a{color:#fff;text-decoration:underline}.nya.v-f .nya-chip .m{color:rgba(255,255,255,.7)}
+.nya.v-g .nya-chip{background:rgba(237,132,0,.18)}.nya.v-g .nya-chip .m{color:var(--orange-text)}
+.nya.v-h .nya-chip{background:var(--menu-background);color:#fff}.nya.v-h .nya-chip .a{color:var(--menu-active-main)}.nya.v-h .nya-chip .m{color:var(--menu-text-muted)}
+.nya-link:hover{text-decoration:underline}
+.nya-chip{color:var(--text-main)}
 .att{display:flex;align-items:flex-start;gap:12px;border:1px solid;border-radius:var(--radius-button);padding:12px 16px;margin-bottom:8px}
 .att p{margin:0;flex:1;font-size:14px}
 .att .ic{margin-top:2px}
@@ -125,8 +135,8 @@ tr.r:focus-visible td{background:var(--hover-muted)}
 .ny-i{display:inline-flex;cursor:help}
 .tip.ny-tip{left:-6px;top:20px;font-size:13px;line-height:20px;padding:8px 14px;z-index:70;box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .tipwrap:focus>.tip{opacity:1}
-.hold{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:#3a383d;color:#a9a7ad;font-size:11px;position:relative;z-index:1}
-.hold.on{background:#4a3214;color:#f2a33a}
+.hold{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:6px;height:24px;padding:0;color:var(--menu-text-muted);font-size:11px;position:relative;z-index:1}
+.hold.on{color:#f2a33a}
 .cards .card{height:212px}
 .addcard{border:1px dashed #d8d8d8;border-radius:var(--radius-medium);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:212px;color:var(--text-main);font-size:13px}
 .addcard small{color:var(--text-secondary);font-size:11px}
@@ -425,6 +435,7 @@ const S={
  modal:null, confirm:null, demoOpen:false, demoReq:'', toasts:[]
 };
 
+S.requests.forEach(r=>{if(!(r.op==='withdraw'&&D.accounts.find(a=>a.id===r.from)?.kind==='set'))delete r.purpose});
 /* ============ Domain ============ */
 const acc=id=>S.accounts.find(a=>a.id===id);
 const req=id=>S.requests.find(r=>r.id===id);
@@ -489,7 +500,7 @@ function renderCard(a,home){
  const menu=menuOpen?`<div class="menu" style="right:8px;top:48px">
    ${a.kind==='crypto'?mi('addfunds','plus','Add funds'):a.kind==='pay'?mi('','plus','Add funds',true,'','<span class="soon">Soon</span>'):''}
    ${zero?'':mi('transfer','transfer','Transfer')}
-   ${a.kind==='crypto'&&!zero?mi('withdraw','ur','Withdraw'):''}
+   ${(a.kind==='crypto'||a.kind==='set')&&!zero?mi('withdraw','ur','Withdraw'):''}
    ${mi('accdetails','file','Account details')}
    ${mi('fav','home',a.fav?'Remove from Home':'Add to Home')}
  </div>`:'';
@@ -523,7 +534,7 @@ function actionItems(){
 function actionBar(home){
  if(S.ui.loading)return '';
  const it=actionItems();if(!it.length)return '';
- return `<div class="nya">${I('alert','s16')}<b>Needs your action · ${it.length}</b>
+ return `<div class="nya v-${(S.ui.chipVar||'A').toLowerCase()}">${I('alert','s16')}<b>Needs your action · ${it.length}</b>
   <div class="nya-chips">${it.map(x=>`<button class="nya-chip" data-act="details" data-id="${x.r.id}"><b>${x.r.id}</b><span class="a">${x.act}</span><span class="m">${x.meta}</span></button>`).join('')}</div>
   <button class="nya-link" data-act="showActions">${home?'Open all':'Show in table'}</button></div>`;
 }
@@ -719,28 +730,34 @@ function renderTransfer(M){
    <div class="fx-sub">${rateLine}</div>${ddTo}
   </div>
   ${errBanner}${strip}<p class="hint">${hint}</p>
-  ${purposeBlock(M)}
+  ${commentBlock(M)}
  </div><div class="mf"><button class="btn sec lg" data-act="closeModal">Cancel</button><button class="btn pri lg" data-act="tContinue" ${c.valid?'':'disabled'}>Continue</button></div></div>`;
 }
-function purposeBlock(M){return `<div class="lbl" style="color:var(--text-main);font-size:14px;margin-top:16px">Purpose</div><div class="purp">${D.purposes.map(p=>`<button class="pchip ${M.purpose===p?'on':''}" data-act="purpose" data-p="${p}">${M.purpose===p?I('check','s14'):''}${p}</button>`).join('')}</div>
-  <div class="lbl" style="color:var(--text-main);font-size:14px;margin-top:16px">Comment</div><input class="tin" data-in="comment" placeholder="Optional" value="${esc(M.comment)}">`}
+function commentBlock(M){return `<div class="lbl" style="color:var(--text-main);font-size:14px;margin-top:16px">Comment</div><input class="tin" data-in="comment" placeholder="Optional" value="${esc(M.comment)}">`}
+// Purpose and supporting documents: only for Withdraw from a Settlements account
+function docsBlock(M){return `<div class="lbl" style="color:var(--text-main);font-size:14px;margin-top:16px">Purpose</div><div class="purp">${D.purposes.map(p=>`<button class="pchip ${M.purpose===p?'on':''}" data-act="purpose" data-p="${p}">${M.purpose===p?I('check','s14'):''}${p}</button>`).join('')}</div>
+  <div class="lbl" style="color:var(--text-main);font-size:14px;margin-top:16px">Supporting documents</div>
+  ${M.files.map((fl,i)=>`<div class="row box" style="margin-top:8px;padding:10px 14px">${I('file','s16')}<div style="flex:1">${esc(fl.name)}<div class="sub">${fl.size} · uploaded</div></div><button data-act="rmFile" data-i="${i}" aria-label="Remove file">${I('x','s16')}</button></div>`).join('')}
+  ${M.files.length<5?`<div class="drop" data-act="pickFile" id="drop" style="padding:18px">${I('upload','s24')}<div style="font-weight:500;margin-top:6px">Drag & drop files here, or click to browse</div><div class="sub">Invoice or contract confirming the payment. PDF, JPG or PNG, up to 10 MB each, up to 5 files</div></div>`:''}
+  ${M.fileErr?`<div class="ferr">${M.fileErr}</div>`:''}`}
+const isSetW=M=>M.type==='withdraw'&&acc(M.from).kind==='set';
 function renderTransferReview(M,c){
  const {f,t}=c;
  return `<div class="modal">${mHead('Review transfer')}
   ${M.err?note('err','Couldn’t submit the transfer. Nothing was reserved and the rate wasn’t fixed. Check your connection and try again.'):''}
   <div class="box"><div class="strip" style="margin-top:0"><div><small>You send</small><b>${fmt(c.amt)} ${f.cur}</b></div>${c.fee?`<div><small>Fee · 0.1% by your tariff</small><b>${fmt(c.fee)} ${t.cur}</b></div>`:`<div><small>Your rate</small><b>1 ${f.cur} = ${rate4(c.rate)} ${t.cur}</b></div>`}<div><small>You receive</small><b>${c.conv?'≈ ':''}${fmt(c.receive)} ${t.cur}</b></div></div>
-  <div style="height:12px"></div>${kv([['From',accFull(f)],['To',accFull(t)],c.conv&&['Your rate',`1 ${f.cur} = ${rate4(c.rate)} ${t.cur} · Kraken ${rate4(c.kr)} minus 0.5%`],c.fee&&['Fee',`0.1% by your tariff · ${fmt(c.fee)} ${t.cur}`],['Purpose',esc(M.purpose)],M.comment&&['Comment',esc(M.comment)]])}</div>
+  <div style="height:12px"></div>${kv([['From',accFull(f)],['To',accFull(t)],c.conv&&['Your rate',`1 ${f.cur} = ${rate4(c.rate)} ${t.cur} · Kraken ${rate4(c.kr)} minus 0.5%`],c.fee&&['Fee',`0.1% by your tariff · ${fmt(c.fee)} ${t.cur}`],M.comment&&['Comment',esc(M.comment)]])}</div>
   ${note('info',`${fmt(c.amt)} ${f.cur} will be reserved on ${accParen(f)} until the transfer is done.`)}
   ${c.conv?note('warn','When you confirm, the rate is fixed and the deal is hedged. The transfer can’t be cancelled after that.'):''}
  </div><div class="mf"><button class="btn sec lg" data-act="tBack">Back</button><button class="btn pri lg" data-act="tConfirm">${M.err?'Try again':'Confirm transfer'}</button></div></div>`;
 }
 
 /* ----- Withdraw ----- */
-function wAllowedNets(from){return [acc(from).net]}
+function wAllowedNets(from){const a=acc(from);return a.kind==='crypto'?[a.net]:['TRON','ETH']}
 function openWithdraw(fromId,opts={}){
- const from=fromId&&acc(fromId).kind==='crypto'?fromId:'usdt',nets=wAllowedNets(from);
+ const from=fromId&&['crypto','set'].includes(acc(fromId).kind)?fromId:'usdt',nets=wAllowedNets(from);
  const w=S.wallets.find(x=>nets.includes(x.net)&&x.status==='active');
- S.modal={type:'withdraw',from,walletId:w?w.id:null,nw:w?null:{address:'',name:'',save:true},amountStr:'',purpose:D.purposes[0],comment:'',dd:null,stage:'form',err:false};
+ S.modal={type:'withdraw',from,walletId:w?w.id:null,nw:w?null:{address:'',name:'',save:true},amountStr:'',purpose:D.purposes[0],comment:'',files:[],dd:null,stage:'form',err:false};
 }
 function wTarget(M){
  if(M.walletId){const w=S.wallets.find(x=>x.id===M.walletId);return {name:w.name,address:w.address,net:w.net,walletId:w.id}}
@@ -775,7 +792,7 @@ function renderWithdraw(M){
  const c=wCalc(M),{f,tg}=c;
  if(M.stage==='review')return renderWithdrawReview(M,c);
  const nets=wAllowedNets(M.from);
- const ddFrom=M.dd==='from'?`<div class="dd" style="top:86px">${['crypto'].map(k=>`<div class="gh">Crypto wallets</div>`+S.accounts.filter(a=>a.kind===k).map(a=>`<button class="op ${a.id===M.from?'on':''}" data-act="wFrom" data-id="${a.id}">${cardIcon(a)}<div><div>${a.kind==='crypto'?a.cur:a.cur+' · '+a.project}</div><small>Available ${fmt(avail(a))} ${a.cur}</small></div></button>`).join('')).join('')}</div>`:'';
+ const ddFrom=M.dd==='from'?`<div class="dd" style="top:86px">${['crypto','set'].map(k=>`<div class="gh">${k==='crypto'?'Crypto wallets':'Settlements accounts'}</div>`+S.accounts.filter(a=>a.kind===k).map(a=>`<button class="op ${a.id===M.from?'on':''}" data-act="wFrom" data-id="${a.id}">${cardIcon(a)}<div><div>${a.kind==='crypto'?a.cur:a.cur+' · '+a.project}</div><small>Available ${fmt(avail(a))} ${a.cur}</small></div></button>`).join('')).join('')}</div>`:'';
  const ddTo=M.dd==='to'?`<div class="dd" style="top:80px">${walletList(M,'wPick',nets)}</div>`:'';
  const empty=!c.amt;
  let toBox;
@@ -809,15 +826,15 @@ function renderWithdraw(M){
    <div class="swap" style="cursor:default">${I('down','s16')}</div>${ddFrom}
   </div>
   <div class="box" style="z-index:${M.dd==='to'?5:1}">${toBox}</div>
-  ${banners}${strip}<p class="hint">${hint}</p>${purposeBlock(M)}
- </div><div class="mf"><button class="btn sec lg" data-act="closeModal">Cancel</button><button class="btn pri lg" data-act="wContinue" ${c.valid?'':'disabled'}>Continue</button></div></div>`;
+  ${banners}${strip}<p class="hint">${hint}</p>${isSetW(M)?docsBlock(M):''}${commentBlock(M)}
+ </div><div class="mf"><button class="btn sec lg" data-act="closeModal">Cancel</button><button class="btn pri lg" data-act="wContinue" ${c.valid&&(!isSetW(M)||M.files.length)?'':'disabled'}>Continue</button></div></div>`;
 }
 function renderWithdrawReview(M,c){
  const {f,tg}=c;
  return `<div class="modal">${mHead('Review withdrawal')}
   ${M.err?note('err','Couldn’t submit the withdrawal. Nothing was reserved or sent. Check your connection and try again.'):''}
   <div class="box"><div class="strip" style="margin-top:0"><div><small>You send</small><b>${fmt(c.amt)} ${f.cur}</b></div><div><small>Fee · by your tariff</small><b>${fmt(c.fee)} ${c.asset}</b></div><div><small>Wallet receives</small><b>${c.conv?'≈ ':''}${fmt(c.receive)} ${c.asset}</b></div></div>
-  <div style="height:12px"></div>${kv([['From',accFull(f)],c.conv&&['Your rate',`1 ${f.cur} = ${rate4(c.rate)} ${c.asset} · Kraken ${rate4(c.kr)} minus 0.5%`],['To',esc(tg.name)],['Address',esc(tg.address),'','big'],['Network',NET[c.net]],['Purpose',esc(M.purpose)],M.comment&&['Comment',esc(M.comment)]])}</div>
+  <div style="height:12px"></div>${kv([['From',accFull(f)],c.conv&&['Your rate',`1 ${f.cur} = ${rate4(c.rate)} ${c.asset} · Kraken ${rate4(c.kr)} minus 0.5%`],['To',esc(tg.name)],['Address',esc(tg.address),'','big'],['Network',NET[c.net]],isSetW(M)&&['Purpose',esc(M.purpose)],isSetW(M)&&['Documents',M.files.map(fl=>esc(fl.name)+' · '+fl.size).join('<br>')],M.comment&&['Comment',esc(M.comment)]])}</div>
   ${note('info',`${fmt(c.amt)} ${f.cur} will be reserved on ${accParen(f)} until the withdrawal is sent.`)}
   ${note('warn',c.conv?'When you confirm, the rate is fixed. Check the address: crypto sent to a wrong address can’t be returned.':'Check the address. Crypto sent to a wrong address can’t be returned.')}
  </div><div class="mf"><button class="btn sec lg" data-act="tBack">Back</button><button class="btn pri lg" data-act="wConfirm">${M.err?'Try again':'Confirm withdrawal'}</button></div></div>`;
@@ -897,6 +914,7 @@ function renderDetails(M){
  else{
   if(isW&&RESERVING.includes(r.status)&&r.status!=='needs_reply')rows.push(['Reserved',`${fmt(r.amount)} ${r.fromCur} on ${accParen(f)}`]);
   if(r.purpose&&r.status!=='needs_reply')rows.push(['Purpose',esc(r.purpose)]);
+  if(r.files&&r.files.length)rows.push(['Documents',r.files.map(fl=>esc(fl.name)+' · '+fl.size).join('<br>')]);
   if(r.comment)rows.push(['Comment',esc(r.comment)]);
   rows.push(['Created',r.created]);
   if(r.status==='done')rows.push(['Done',r.doneAt]);
@@ -1049,6 +1067,8 @@ function renderDemo(){
   <div class="bs" style="margin-top:6px">${b('dRejPublic','Reject · reason shown',can.rej)}${b('dRejAml','Reject · AML (general text)',can.rej)}${b('dRejAuto','Auto-reject (deadline)',can.auto)}</div>
   <div class="g">Events</div>
   <div class="bs">${b('dIncoming','Incoming Add funds (USDT)',1)}${b('dFA1','Open FA1 · bank transfer (Soon)',1)}</div>
+  <div class="g">Needs your action · chip style</div>
+  <div class="bs">${['A','B','C','D','E','F','G','H'].map(v=>`<button class="db ${(S.ui.chipVar||'A')===v?'on':''}" data-act="dChip" data-v="${v}">${{A:'A · Outline',B:'B · Brand fill',C:'C · Deadline first',D:'D · Brand tint',E:'E · Orange fill',F:'F · Brand fill',G:'G · Soft orange',H:'H · Dark fill'}[v]}</button>`).join('')}</div>
   <div class="g">States</div>
   <div class="bs">${t('failNext','Next submit fails (T2a/W2a)')}${b('dGridFail','Grid failed to load (G3)',1)}${b('dLoading','Loading (overlay)',1)}${t('outdated','Balances outdated')}${b('dZero','Zero balance · EUR Settlements',1)}${b('dNoWallets','Remove all saved wallets (MW5)',S.wallets.length)}${b('dNoNotifs','Clear notifications (NT2)',S.notifs.length)}</div>
  </div></div>`;
@@ -1073,7 +1093,7 @@ function submitTransfer(){
  const M=S.modal,c=tCalc(M);
  if(S.ui.failNext){S.ui.failNext=false;M.err=true;return render()}
  const t=now(),id=nextId();
- S.requests.unshift({id,op:'transfer',from:M.from,to:M.to,amount:c.amt,fromCur:c.f.cur,receive:c.receive,toCur:c.t.cur,fee:c.fee,feeCur:c.t.cur,conv:c.conv,rate:c.rate,kraken:c.kr,rateFixed:c.conv,rateFixedAt:c.conv?t:null,approx:c.conv,purpose:M.purpose,comment:M.comment,created:t,updated:t,status:'submitted',step:'review'});
+ S.requests.unshift({id,op:'transfer',from:M.from,to:M.to,amount:c.amt,fromCur:c.f.cur,receive:c.receive,toCur:c.t.cur,fee:c.fee,feeCur:c.t.cur,conv:c.conv,rate:c.rate,kraken:c.kr,rateFixed:c.conv,rateFixedAt:c.conv?t:null,approx:c.conv,comment:M.comment,created:t,updated:t,status:'submitted',step:'review'});
  notify('Transfer submitted',`${id} · ${fmt(c.amt)} ${c.f.cur} reserved.`,id);
  S.modal=null;toast(`Transfer ${id} submitted · ${fmt(c.amt)} ${c.f.cur} reserved`);render();
 }
@@ -1085,7 +1105,7 @@ function submitWithdraw(){
  if(dup)to=wsnap(dup);
  else if(to.isNew&&M.nw.save){const w={id:'w'+Date.now(),name:M.nw.name||'New wallet',net:c.net,address:to.address,withdrawals:0,totalW:0,last:'',lastRel:'no withdrawals yet',added:t.slice(0,10),aml:'—',status:'active'};S.wallets.push(w);to={...wsnap(w)}}
  else to={walletId:to.walletId,name:to.name,address:to.address,net:c.net};
- S.requests.unshift({id,op:'withdraw',from:M.from,to,amount:c.amt,fromCur:c.f.cur,receive:c.receive,toCur:c.asset,fee:c.fee,feeCur:c.asset,conv:c.conv,rate:c.rate,kraken:c.kr,rateFixed:c.conv,approx:c.conv,purpose:M.purpose,comment:M.comment,created:t,updated:t,status:'submitted',step:'review'});
+ S.requests.unshift({id,op:'withdraw',from:M.from,to,amount:c.amt,fromCur:c.f.cur,receive:c.receive,toCur:c.asset,fee:c.fee,feeCur:c.asset,conv:c.conv,rate:c.rate,kraken:c.kr,rateFixed:c.conv,approx:c.conv,purpose:isSetW(M)?M.purpose:undefined,files:isSetW(M)?M.files:undefined,comment:M.comment,created:t,updated:t,status:'submitted',step:'review'});
  notify('Withdrawal submitted',`${id} · ${fmt(c.amt)} ${c.f.cur} reserved.`,id);
  S.modal=null;toast(`Withdrawal ${id} submitted · ${fmt(c.amt)} ${c.f.cur} reserved`);render();
 }
@@ -1222,6 +1242,7 @@ const A={
  dRejAuto:()=>{const r=req(S.demoReq);const dl=r.status==='needs_reply'?r.question.deadline:r.terms?.deadline||now();
   release(r,'auto',r.status==='needs_reply'?`No reply to the finance team’s question by ${dl}`:`No decision on the new terms by ${dl}`,dl);toast(`${r.id} rejected automatically`);render()},
  dIncoming:()=>{const t=now(),id=nextId();S.requests.unshift({id,op:'addfunds',from:null,to:'usdt',amount:1000,fromCur:'USDT',receive:997,toCur:'USDT',fee:3,feeCur:'USDT',approx:true,created:t,updated:t,status:'pending'});S.demoReq=id;S.page='bm';toast(`Incoming transfer detected on your USDT address · ${id} Pending`);render()},
+ dChip:d=>{S.ui.chipVar=d.v;render()},
  dFA1:()=>{S.modal={type:'fa1'};render()},
  dToggle:d=>{S.ui[d.k]=!S.ui[d.k];render()},
  dGridFail:()=>{S.page='bm';S.ui.gridState='failed';render()},
@@ -1274,7 +1295,7 @@ document.addEventListener('change',e=>{const k=e.target.dataset.in;if(['fOp','fP
 document.addEventListener('keydown',e=>{const t=e.target;if((e.key==='Enter'||e.key===' ')&&t.dataset&&t.dataset.act&&!/^(BUTTON|INPUT|SELECT|TEXTAREA|A)$/.test(t.tagName)){e.preventDefault();t.click();return}
  if(e.key==='Tab'&&(S.modal||S.confirm)){const root=document.querySelector(S.confirm?'.confirm':'.modal');const f=[...root.querySelectorAll('button:not([disabled]),input,select,textarea,[tabindex="0"]')];if(f.length){const i=f.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();f.at(-1).focus()}else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus()}else if(i<0){e.preventDefault();f[0].focus()}}}
  if(e.key==='Escape'){if(S.confirm){S.confirm=null;render()}else if(S.modal)tryClose()}});
-function addFiles(list){const M=S.modal;if(!M||M.type!=='reply')return;M.fileErr='';
+function addFiles(list){const M=S.modal;if(!M||!(M.type==='reply'||isSetW(M)))return;M.fileErr='';
  for(const f of list){if(M.files.length>=5)break;if(!/\.(pdf|jpe?g|png)$/i.test(f.name)){M.fileErr='Only PDF, JPG or PNG files.';continue}if(f.size>10*1024*1024){M.fileErr=`${f.name} is larger than 10 MB.`;continue}
   M.files.push({name:f.name,size:f.size>1048576?(f.size/1048576).toFixed(1)+' MB':Math.max(1,Math.round(f.size/1024))+' KB'})}render()}
 document.getElementById('filepick').addEventListener('change',e=>{addFiles(e.target.files);e.target.value=''});
