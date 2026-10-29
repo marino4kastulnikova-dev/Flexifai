@@ -76,11 +76,21 @@ h2{font-size:20px;line-height:28px;font-weight:500;margin:0}
 .lnk{color:var(--blue);text-decoration:underline;cursor:pointer}
 :focus-visible{outline:2px solid var(--menu-active-main);outline-offset:2px}
 tr.r:focus-visible td{background:var(--hover-muted)}
-.chip{height:32px;padding:0 12px;border-radius:8px;background:var(--background-muted);border:1px solid transparent;font-size:12px;white-space:nowrap}
+.chip{height:40px;padding:0 12px;border-radius:var(--radius-button);background:var(--background-muted);border:1px solid transparent;font-size:14px;white-space:nowrap}
+.bar-row{display:flex;align-items:center;gap:6px;flex-wrap:nowrap}
+.bar-row .btn{height:40px;padding:0 12px;font-size:14px;gap:6px}
 .chip.on{background:var(--brand-color);color:#fff}
 .pchip{height:36px;padding:0 16px;border-radius:999px;border:1px solid var(--outline);background:#fff;display:inline-flex;align-items:center;gap:6px}
 .pchip.on{border-color:var(--brand-color);background:var(--brand-color-muted);color:var(--brand-color)}
 /* Attention blocks */
+.nya{display:flex;align-items:center;gap:10px;background:var(--orange-muted);border-radius:var(--radius-medium);padding:10px 16px;margin-bottom:8px;font-size:14px}
+.nya-chips{display:flex;gap:8px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;padding:1px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent)}
+.nya-chips::-webkit-scrollbar{display:none}
+.nya>.ic{color:var(--orange)}.nya>b{font-weight:500;white-space:nowrap}
+.nya-chip{display:inline-flex;gap:6px;align-items:center;background:var(--background);border-radius:999px;padding:5px 10px;white-space:nowrap;flex:none;font-size:13px}
+.nya-chip b{font-weight:500}.nya-chip .a{color:var(--brand-color);font-weight:500}.nya-chip .m{color:var(--text-secondary)}
+.nya-chip:hover{box-shadow:inset 0 0 0 1px var(--brand-color)}
+.nya-link{color:var(--brand-color);font-weight:500;white-space:nowrap}
 .att{display:flex;align-items:flex-start;gap:12px;border:1px solid;border-radius:var(--radius-button);padding:12px 16px;margin-bottom:8px}
 .att p{margin:0;flex:1;font-size:14px}
 .att .ic{margin-top:2px}
@@ -97,11 +107,12 @@ tr.r:focus-visible td{background:var(--hover-muted)}
 /* Balances */
 .groups-h{font-size:12px;color:var(--text-secondary);margin:14px 0 8px}
 .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.card{position:relative;background:var(--menu-background);color:#fff;border-radius:var(--radius-medium);padding:16px;min-height:168px;overflow:visible;display:flex;flex-direction:column}
+.card{position:relative;z-index:0;background:var(--menu-background);color:#fff;border-radius:var(--radius-medium);padding:16px;min-height:168px;overflow:visible;display:flex;flex-direction:column}
+.card:has(.menu),.card:has(.tipwrap:hover),.card:has(.tipwrap:focus){z-index:50}
 .card .wmc{position:absolute;inset:0;overflow:hidden;border-radius:var(--radius-medium);pointer-events:none}
 .card .wm{position:absolute;right:-6px;bottom:-24px;font-size:150px;line-height:1;color:#2d2c30;font-weight:600;pointer-events:none;overflow:hidden;user-select:none}
 .card-h{display:flex;align-items:center;gap:10px;position:relative;z-index:1}
-.card-h .t{font-weight:500}
+.card-h .t{font-weight:500;white-space:nowrap}
 .card-h small{display:block;color:var(--menu-text-muted);font-size:12px;line-height:16px}
 .cicon{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:15px;color:#fff;flex:none}
 .cbtn{width:28px;height:28px;border-radius:50%;background:#3a383d;display:grid;place-items:center;color:#cfcdd3}
@@ -110,12 +121,15 @@ tr.r:focus-visible td{background:var(--hover-muted)}
 .card .av{margin-top:14px;font-size:12px;color:var(--menu-text-muted);position:relative;z-index:1}
 .card .amt{font-size:26px;line-height:34px;position:relative;z-index:1}
 .card .amt small{font-size:12px;color:var(--menu-text-muted);margin-left:6px}
-.card .ny{font-size:11px;color:var(--menu-text-muted);position:relative;z-index:1;display:flex;align-items:center;gap:4px}
+.card .ny{font-size:11px;color:var(--menu-text-muted);position:relative;z-index:5;display:flex;align-items:center;gap:4px}
+.ny-i{display:inline-flex;cursor:help}
+.tip.ny-tip{left:-6px;top:20px;font-size:13px;line-height:20px;padding:8px 14px;z-index:70;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.tipwrap:focus>.tip{opacity:1}
 .hold{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:#3a383d;color:#a9a7ad;font-size:11px;position:relative;z-index:1}
 .hold.on{background:#4a3214;color:#f2a33a}
 .addcard{border:1px dashed #d8d8d8;border-radius:var(--radius-medium);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:168px;color:var(--text-main);font-size:13px}
 .addcard small{color:var(--text-secondary);font-size:11px}
-.menu{position:absolute;z-index:30;background:#fff;color:var(--text-main);border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.18);padding:6px;min-width:200px}
+.menu{position:absolute;z-index:60;background:#fff;color:var(--text-main);border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.18);padding:6px;min-width:200px}
 .menu .mi{display:flex;align-items:center;gap:10px;width:100%;height:36px;padding:0 10px;border-radius:8px;font-size:13px;text-align:left;position:relative}
 .menu .mi:hover{background:var(--hover-muted)}
 .menu .mi.dis{color:#b8b8b8;cursor:not-allowed}
@@ -245,6 +259,9 @@ select.tin{appearance:auto}
 .stlist label.g{font-weight:500}
 .stlist label.i{padding-left:32px}
 /* Toast */
+.lov{position:fixed;inset:0;z-index:180;background:rgba(34,33,36,.45);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:grid;place-items:center}
+.lbox{background:#fff;border-radius:var(--radius-medium);padding:32px 48px;text-align:center;min-width:300px;box-shadow:0 12px 40px rgba(0,0,0,.2)}
+.lbox .ic{color:var(--menu-active-main)}
 .toasts{position:fixed;top:16px;right:16px;z-index:200;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
 .toast{background:var(--menu-background);color:#fff;border-radius:12px;padding:12px 16px;display:flex;gap:10px;align-items:center;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.2);max-width:520px}
 .toast .ic{color:#7be08f}
@@ -379,11 +396,10 @@ const S={
   {id:'TR-2026-026',op:'addfunds',from:null,to:'usdt',amount:5000,fromCur:'USDT',receive:4985,toCur:'USDT',fee:15,feeCur:'USDT',approx:true,created:'22.10.2026 08:05',updated:'22.10.2026 08:05',status:'pending'},
   {id:'TR-2026-018',op:'transfer',from:'set-eur',to:'usdt',amount:7500,fromCur:'EUR',receive:8104.90,toCur:'USDT',fee:0,feeCur:'USDT',conv:true,rate:1.0807,kraken:1.0861,rateFixed:true,approx:true,purpose:'Treasury and rebalancing',created:'21.10.2026 15:40',updated:'21.10.2026 16:06',status:'in_progress',step:'review'},
   {id:'TR-2026-024',op:'transfer',from:'usdt',to:'pay-eur',amount:5000,fromCur:'USDT',receive:4604.39,toCur:'EUR',fee:4.61,feeCur:'EUR',conv:true,rate:0.9218,kraken:0.9264,rateFixed:true,purpose:'Treasury and rebalancing',created:'22.10.2026 14:32',updated:'22.10.2026 15:10',status:'done',doneAt:'22.10.2026 15:10'},
-  {id:'TR-2026-027',op:'withdraw',from:'set-eur',to:wsnap(D.wallets[0]),amount:10000,fromCur:'EUR',receive:10793,toCur:'USDT',fee:1,feeCur:'USDT',conv:true,rate:1.0794,kraken:1.0848,rateFixed:true,purpose:'Treasury and rebalancing',created:'22.10.2026 14:32',updated:'22.10.2026 15:05',status:'sent',doneAt:'22.10.2026 15:05',hash:'7f3a9c41…e21c91e'},
   {id:'TR-2026-017',op:'withdraw',from:'usdt',to:wsnap(D.wallets[1]),amount:20000,fromCur:'USDT',receive:19999,toCur:'USDT',fee:1,feeCur:'USDT',conv:false,purpose:'Treasury and rebalancing',created:'21.10.2026 10:02',updated:'21.10.2026 11:18',status:'sent',doneAt:'21.10.2026 11:18',hash:'a41c09e2…77b3f10'},
   {id:'TR-2026-014',op:'addfunds',from:null,to:'usdt',amount:1504.51,fromCur:'USDT',receive:1500,toCur:'USDT',fee:4.51,feeCur:'USDT',created:'21.10.2026 11:12',updated:'21.10.2026 11:15',status:'credited',doneAt:'21.10.2026 11:15'},
   {id:'TR-2026-029',op:'withdraw',from:'usdc',to:wsnap(D.wallets[2]),amount:8000,fromCur:'USDC',receive:7995,toCur:'USDC',fee:5,feeCur:'USDC',conv:false,purpose:'Treasury and rebalancing',created:'21.10.2026 10:40',updated:'21.10.2026 12:04',status:'rejected',stopAt:1,reject:{kind:'aml',at:'21.10.2026 12:04'}},
-  {id:'TR-2026-015',op:'withdraw',from:'set-usd',to:wsnap(D.wallets[0]),amount:12000,fromCur:'USD',receive:0,toCur:'USDT',fee:1,feeCur:'USDT',conv:true,purpose:'Treasury and rebalancing',created:'19.10.2026 15:02',updated:'19.10.2026 17:18',status:'rejected',stopAt:1,reject:{kind:'public',reason:'Required documents were not provided',at:'19.10.2026 17:18'}},
+  {id:'TR-2026-015',op:'withdraw',from:'usdt',to:wsnap(D.wallets[0]),amount:12000,fromCur:'USDT',receive:11999,toCur:'USDT',fee:1,feeCur:'USDT',conv:false,purpose:'Treasury and rebalancing',created:'19.10.2026 15:02',updated:'19.10.2026 17:18',status:'rejected',stopAt:1,reject:{kind:'public',reason:'Required documents were not provided',at:'19.10.2026 17:18'}},
   {id:'TR-2026-012',op:'withdraw',from:'usdt',to:wsnap(D.wallets[1]),amount:3000,fromCur:'USDT',receive:2999,toCur:'USDT',fee:1,feeCur:'USDT',conv:false,purpose:'Treasury and rebalancing',created:'15.10.2026 09:00',updated:'18.10.2026 09:00',status:'rejected',stopAt:1,reject:{kind:'auto',reason:'No reply to the finance team’s question by 18.10.2026 09:00',at:'18.10.2026 09:00'}},
   {id:'ST-2026-1021',op:'settlement',from:null,to:'set-eur',amount:12400,fromCur:'EUR',receive:12400,toCur:'EUR',updated:'22.10.2026 06:00',created:'22.10.2026 06:00',status:'credited',
    st:{payments:15230,fees:1230,reserve:1600,reserveOn:'28.10.2026',count:412,period:'21.10.2026, 00:00–23:59'}},
@@ -396,7 +412,7 @@ const S={
   {id:3,title:'New terms for your request',text:'TR-2026-021 · Transfer to Payouts. Accept or reject the new terms.',req:'TR-2026-021',action:'awaiting',time:'Today, 08:20',read:false},
   {id:4,title:'Withdrawal sent',text:'TR-2026-017 · 19 999.00 USDT sent to Treasury cold wallet.',req:'TR-2026-017',time:'Yesterday, 16:02',read:true},
   {id:5,title:'Funds credited',text:'TR-2026-014 · 1 500.00 USDT credited to USDT wallet.',req:'TR-2026-014',time:'Yesterday, 11:15',read:true},
-  {id:6,title:'Request rejected',text:'TR-2026-015 · 12 000.00 USD. The reserve is released.',req:'TR-2026-015',time:'19.10.2026, 17:18',read:true},
+  {id:6,title:'Request rejected',text:'TR-2026-015 · 12 000.00 USDT. The reserve is released.',req:'TR-2026-015',time:'19.10.2026, 17:18',read:true},
  ],
  ui:{proj:'All projects',menu:null,search:'',sel:new Set(),sort:{key:'updated',dir:'desc'},exportMenu:false,notifOpen:false,gridState:'ok',loading:false,outdated:false,failNext:false,failGrid:false},
  f:{from:'',to:'',statuses:[],op:'',project:'',account:''},
@@ -463,18 +479,17 @@ function renderCard(a,home){
  const av=avail(a),h=hold(a),loading=S.ui.loading;
  const zero=av<=0;
  const menuOpen=S.ui.menu===a.id+(home?'-h':'');
- const tipZero='No available funds to transfer or withdraw';
  const mi=(act,ic,label,dis,tip,extra='')=>`<div class="tipwrap"><button class="mi ${dis?'dis':''}" ${dis?'':`data-act="${act}" data-id="${a.id}"`}>${I(ic,'s16')}${label}${extra}</button>${tip?`<span class="tip" style="left:100%;top:6px;margin-left:8px">${tip}</span>`:''}</div>`;
  const menu=menuOpen?`<div class="menu" style="right:8px;top:48px">
-   ${a.kind==='crypto'?mi('addfunds','plus','Add funds'):mi('','plus','Add funds',true,'','<span class="soon">Soon</span>')}
-   ${mi('transfer','transfer','Transfer',zero,zero?tipZero:'')}
-   ${mi('withdraw','ur','Withdraw',zero,zero?tipZero:'')}
+   ${a.kind==='crypto'?mi('addfunds','plus','Add funds'):a.kind==='pay'?mi('','plus','Add funds',true,'','<span class="soon">Soon</span>'):''}
+   ${zero?'':mi('transfer','transfer','Transfer')}
+   ${a.kind==='crypto'&&!zero?mi('withdraw','ur','Withdraw'):''}
    ${mi('accdetails','file','Account details')}
    ${mi('fav','home',a.fav?'Remove from Home':'Add to Home')}
  </div>`:'';
  let ny='';
  if(a.notYet&&!home){
-  ny=a.releases?`<div class="ny tipwrap">${fmt(a.notYet)} ${a.cur} not available yet ${I('info','s14')}<span class="tip dark" style="left:0;top:20px;white-space:normal;width:220px">${a.releases.join('<br>')}</span></div>`
+  ny=a.releases?`<div class="ny">${fmt(a.notYet)} ${a.cur} not available yet <span class="tipwrap ny-i" tabindex="0" aria-label="When it becomes available">${I('info','s14')}<span class="tip ny-tip">${a.releases.join('<br>')}</span></span></div>`
    :`<div class="ny">${fmt(a.notYet)} ${a.cur} in processing, not available yet</div>`;
  }
  return `<div class="card">
@@ -493,22 +508,18 @@ function renderCard(a,home){
 }
 
 /* ============ Balance management page ============ */
-function attentionBlocks(){
+function actionItems(){
+ const L=S.requests.filter(r=>r.status==='awaiting'||r.status==='needs_reply');
+ const ord=r=>r.status==='awaiting'&&r.await==='terms'?0:r.status==='awaiting'?1:2;
+ return L.sort((x,y)=>ord(x)-ord(y)).map(r=>r.status==='needs_reply'?{r,act:'Reply',meta:`${r.question.left} left`}
+  :r.await==='terms'?{r,act:'Accept terms',meta:`${r.terms.left} left`}:{r,act:'Choose wallet',meta:'Amount reserved'});
+}
+function actionBar(home){
  if(S.ui.loading)return '';
- const aw=S.requests.filter(r=>r.status==='awaiting'), nr=S.requests.filter(r=>r.status==='needs_reply');
- let h='';
- if(aw.length){h+=`<div class="lbl" style="color:var(--text-main)">Awaiting your decision · ${aw.length}</div>`;
-  aw.forEach(r=>{
-   if(r.await==='terms'){const f=acc(r.from),t=acc(r.to);
-    h+=`<div class="att warn">${I('alert')}<p>${r.id} · ${opLabel(r)} · ${f.project} ${f.cur} → ${t.project} ${t.cur} — our team updated the terms: 1 ${f.cur} = ${rate4(r.terms.rate)} ${t.cur}, you get ${fmt(r.terms.receive)} ${t.cur}. Accept or decline within ${r.terms.left}.</p><div class="acts"><button class="btn pri sm" data-act="openTerms" data-id="${r.id}">Accept terms</button><button class="btn sec sm" data-act="details" data-id="${r.id}">Details</button></div></div>`;
-   }else{
-    h+=`<div class="att warn">${I('alert')}<p>${r.id} · Withdraw · ${accName(acc(r.from))} → ${esc(r.to.name)} — the wallet didn’t pass our AML check. Choose another wallet to receive ${fmt(r.receive)} ${r.toCur}. The amount stays reserved.</p><div class="acts"><button class="btn pri sm" data-act="chooseWallet" data-id="${r.id}">Choose wallet</button><button class="btn sec sm" data-act="details" data-id="${r.id}">Details</button></div></div>`;
-   }
-  });}
- if(nr.length){h+=`<div class="lbl" style="color:var(--text-main)">Needs your reply · <span class="pos">${nr.length}</span></div>`;
-  nr.forEach(r=>{const dir=r.op==='withdraw'?`${accName(acc(r.from))} → ${esc(r.to.name)}`:`${accName(acc(r.from))} → ${accName(acc(r.to))}`;
-   h+=`<div class="att info">${I('help')}<p>${r.id} · ${opLabel(r)} · ${dir} — ${r.question.short}. Reply within ${r.question.left}, otherwise the request is rejected automatically.</p><div class="acts"><button class="btn sec sm" data-act="reply" data-id="${r.id}">Reply</button></div></div>`;});}
- return h;
+ const it=actionItems();if(!it.length)return '';
+ return `<div class="nya">${I('alert','s16')}<b>Needs your action · ${it.length}</b>
+  <div class="nya-chips">${it.map(x=>`<button class="nya-chip" data-act="details" data-id="${x.r.id}"><b>${x.r.id}</b><span class="a">${x.act}</span><span class="m">${x.meta}</span></button>`).join('')}</div>
+  <button class="nya-link" data-act="showActions">${home?'Open all':'Show in table'}</button></div>`;
 }
 function renderBM(){
  const projs=['All projects','Casino EU','Sportsbook UK','Payouts EU','Payouts UK','Crypto wallet'];
@@ -518,14 +529,12 @@ function renderBM(){
  document.getElementById('main').innerHTML=`<div class="panel">
   <h1>Balance management</h1><div class="sub">Fiat and crypto balances: add funds, transfers and withdrawals.</div>
   <div class="hr"></div>
-  ${attentionBlocks()}
-  <div class="row" style="margin-top:20px"><h2>Balances</h2><span class="sp"></span>
+  <div class="bar-row">${projs.map(p=>`<button class="chip ${S.ui.proj===p?'on':''}" data-act="proj" data-p="${p}">${p}</button>`).join('')}<span class="sp"></span>
    <button class="btn sec" data-act="addfunds">${I('plus','s16')}Add funds</button>
-   <button class="btn sec" data-act="transfer">${I('transfer','s16')}Transfer between balances</button>
+   <button class="btn sec" data-act="transfer">${I('transfer','s16')}Transfer</button>
    <button class="btn pri" data-act="withdraw">${I('ur','s16')}Withdraw</button></div>
-  <div class="hr" style="margin:12px 0"></div>
+  <div style="height:16px"></div>${actionBar()}
   ${S.ui.outdated?`<div class="note warn">${I('alert','s16')}<span>Balances may be outdated: we couldn’t refresh them. Amounts are shown as of 14:20.</span><span class="sp"></span><button class="btn sec sm" data-act="refreshBal">${I('refresh','s16')}Refresh</button></div>`:''}
-  <div class="row" style="gap:6px">${projs.map(p=>`<button class="chip ${S.ui.proj===p?'on':''}" data-act="proj" data-p="${p}">${p}</button>`).join('')}</div>
   ${grp('set','Settlements accounts','Add settlements account')}
   ${grp('pay','Payouts accounts','Add payouts account')}
   ${grp('crypto','Crypto wallets','')}
@@ -578,7 +587,7 @@ function renderGrid(){
   <th class="sortable" data-act="sort" data-k="amount" style="width:140px">Amount${sortI('amount')}</th><th style="width:140px">To receive</th>
   <th class="sortable" data-act="sort" data-k="status" style="width:180px">Status${sortI('status')}</th><th class="sortable" data-act="sort" data-k="updated" style="width:140px">Updated${sortI('updated')}</th></tr>`;
  let body;
- if(S.ui.loading||S.ui.gridState==='loading')body=`<tr><td colspan="8" style="border:0"><div class="empty">${I('refresh','s24 spin')}<div class="sub">Loading...</div></div></td></tr>`;
+ if(S.ui.gridState==='loading')body=`<tr><td colspan="8" style="border:0"><div class="empty">${I('refresh','s24 spin')}<div class="sub">Loading...</div></div></td></tr>`;
  else if(S.ui.gridState==='failed')body=`<tr><td colspan="8" style="border:0;white-space:normal"><div class="note err">${I('alert','s16')}We couldn’t load your requests. Your balances are up to date. Check your connection and try again.</div><button class="btn sec" data-act="retryGrid">Try again</button></td></tr>`;
  else{const {rows}=filtered();
   if(!rows.length){
@@ -624,9 +633,10 @@ function renderHome(){
   <div class="topbar"><span class="tsel">30 May–30 Apr ${I('cd','s16')}</span><span class="tsel">EUR ${I('cd','s16')}</span><span class="tsel" style="width:160px;justify-content:space-between">All projects ${I('cd','s16')}</span><span class="sp"></span>
    <div style="position:relative"><button class="iconbtn" data-act="bell">${I('bell','s16')}${unread?`<span class="nbadge">${unread}</span>`:''}</button>${panel}</div>
    <button class="iconbtn" data-act="dead">${I('moon','s16')}</button></div>
+  ${actionBar(true)}
   <div class="kpis">${kpi('Turnover today','150.00 EUR',1)}${kpi('Turnover 7 days','210.00 EUR',1)}${kpi('Turnover 30 days','670.00 EUR')}<div class="kpi"><div>Average check</div><div class="big">0.00 EUR</div><div class="sub">Median: 10</div></div></div>
   <div class="panel"><div class="row"><h2 style="font-size:16px">Favourite balances</h2><span class="sp"></span>
-   <button class="btn sec" data-act="addfunds">${I('plus','s16')}Add funds</button><button class="btn sec" data-act="transfer">${I('transfer','s16')}Transfer between balances</button><button class="btn pri" data-act="withdraw">${I('ur','s16')}Withdraw</button></div>
+   <button class="btn sec" data-act="addfunds">${I('plus','s16')}Add funds</button><button class="btn sec" data-act="transfer">${I('transfer','s16')}Transfer</button><button class="btn pri" data-act="withdraw">${I('ur','s16')}Withdraw</button></div>
    <div class="hcards" style="margin-top:12px">${favs.map(a=>renderCard(a,true)).join('')||'<div class="sub">No favourite balances</div>'}</div></div>
   <div class="two"><div class="panel"><h2 style="font-size:16px">Volume dynamic, EUR</h2>
     <svg viewBox="0 0 600 200" style="width:100%;height:200px;margin-top:12px"><defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#b481ff" stop-opacity=".6"/><stop offset="1" stop-color="#b481ff" stop-opacity=".05"/></linearGradient></defs>
@@ -650,7 +660,7 @@ function destOptions(from){
  const a=acc(from);
  if(a.kind==='crypto')return S.accounts.filter(x=>x.id!==from&&(x.kind==='crypto'||x.kind==='pay'));
  if(a.kind==='set')return S.accounts.filter(x=>x.kind==='pay'||x.kind==='crypto');
- return S.accounts.filter(x=>x.kind==='pay'&&x.id!==from);
+ return S.accounts.filter(x=>(x.kind==='pay'&&x.id!==from)||x.kind==='crypto');
 }
 function defaultDest(from){const a=acc(from),o=destOptions(from);return (o.find(x=>a.kind==='set'&&x.kind==='pay'&&x.cur===a.cur)||o.find(x=>a.kind==='crypto'&&x.kind==='crypto')||o[0]).id}
 function tCalc(M){
@@ -670,7 +680,6 @@ function renderTransfer(M){
  if(M.stage==='review')return renderTransferReview(M,c);
  let swapEl;
  if(f.kind==='set')swapEl=`<div class="swap" style="cursor:default">${I('down','s16')}</div>`;
- else if(f.kind==='crypto'&&t.kind==='pay')swapEl=`<div class="swap dis tipwrap">${I('swap','s16')}<span class="tip">Transfers from Payouts to a crypto wallet aren’t available</span></div>`;
  else swapEl=`<button class="swap" data-act="tSwap" title="Swap">${I('swap','s16')}</button>`;
  const ddFrom=M.dd==='from'?`<div class="dd" style="top:86px">${['set','pay','crypto'].map(k=>{const l=S.accounts.filter(a=>a.kind===k);return `<div class="gh">${{set:'Settlements accounts',pay:'Payouts accounts',crypto:'Crypto wallets'}[k]}</div>`+l.map(a=>{const h=hold(a);
    const ex=`Available ${fmt(avail(a))} ${a.cur}${a.notYet?` · ${fmt(a.notYet)} ${a.cur} not available yet`:''}${a.kind==='crypto'&&h?` · on hold ${fmt(h)} ${a.cur}`:''}`;
@@ -689,7 +698,7 @@ function renderTransfer(M){
  else hint=`No conversion. Fee 0.1% by your tariff for transfers to Payouts.`;
  const strip=empty?'':`<div class="strip"><div><small>You send</small><b>${fmt(c.amt)} ${f.cur}</b></div>${c.fee?`<div><small>Fee · 0.1% by your tariff</small><b>${fmt(c.fee)} ${t.cur}</b></div>`:`<div><small>Your rate</small><b>1 ${f.cur} = ${rate4(c.rate)} ${t.cur}</b></div>`}<div><small>You receive</small><b>${c.conv?'≈ ':''}${fmt(c.receive)} ${t.cur}</b></div></div>`;
  const errBanner=c.over?note('err',f.kind==='set'?`Not enough available funds. Available ${fmt(c.av)} ${f.cur}; ${fmt(f.notYet)} ${f.cur} from recent payments is not available yet.`:`Not enough available funds. Available ${fmt(c.av)} ${f.cur}.`):'';
- return `<div class="modal">${mHead('Transfer between balances')}
+ return `<div class="modal">${mHead('Transfer')}
   <div class="box ${c.over?'err':''}" style="z-index:${M.dd==='from'?5:2}">
    <div class="fx-top"><span>From</span><span>Available ${fmt(c.av)} ${f.cur}<button class="maxb" data-act="tMax">Max</button></span></div>
    <div class="fx-mid"><button class="sel" data-act="tDD" data-k="from">${cardIcon(f)}<div><div class="t">${accName(f)}</div><small>${accSub(f)}</small></div>${I('cd','s16')}</button>
@@ -721,9 +730,9 @@ function renderTransferReview(M,c){
 }
 
 /* ----- Withdraw ----- */
-function wAllowedNets(from){const a=acc(from);return a.kind==='crypto'?[a.net]:['TRON','ETH']}
+function wAllowedNets(from){return [acc(from).net]}
 function openWithdraw(fromId,opts={}){
- const from=fromId||'usdt',nets=wAllowedNets(from);
+ const from=fromId&&acc(fromId).kind==='crypto'?fromId:'usdt',nets=wAllowedNets(from);
  const w=S.wallets.find(x=>nets.includes(x.net)&&x.status==='active');
  S.modal={type:'withdraw',from,walletId:w?w.id:null,nw:w?null:{address:'',name:'',save:true},amountStr:'',purpose:D.purposes[0],comment:'',dd:null,stage:'form',err:false};
 }
@@ -738,8 +747,7 @@ function wCalc(M){
   if(f.kind==='crypto'&&tg.net!==f.net){addrErr=f.net==='TRON'?'Not a TRON address. It starts with T and has 34 characters.':'Not an Ethereum address. It starts with 0x and has 42 characters.'}
   else if(!tg.net){addrErr='Not a TRON or Ethereum address. Check that it is complete.'}
   else{const ownAsset=Object.keys(OWN).find(k=>OWN[k].toLowerCase()===tg.address.toLowerCase());
-   if(ownAsset){if(f.kind==='crypto'&&f.cur===ownAsset){addrErr='You can’t withdraw to this wallet’s own address.';addrBanner=addrErr}
-    else{addrErr=`This is your ${ownAsset} wallet in the cabinet.`;addrBanner=`This is your ${ownAsset} wallet in the cabinet. Use Transfer to move funds here: it’s instant and has no network fee.`}}}
+   if(ownAsset){addrErr=`This is your ${ownAsset} wallet in the cabinet.`;addrBanner='You can’t withdraw to this wallet’s own address.'}}
  }
  const net=tg.net&&nets.includes(tg.net)&&!addrErr?tg.net:(f.kind==='crypto'?f.net:null);
  const asset=net?ASSET[net]:null,conv=f.kind!=='crypto';
@@ -761,7 +769,7 @@ function renderWithdraw(M){
  const c=wCalc(M),{f,tg}=c;
  if(M.stage==='review')return renderWithdrawReview(M,c);
  const nets=wAllowedNets(M.from);
- const ddFrom=M.dd==='from'?`<div class="dd" style="top:86px">${['set','pay','crypto'].map(k=>`<div class="gh">${{set:'Settlements accounts',pay:'Payouts accounts',crypto:'Crypto wallets'}[k]}</div>`+S.accounts.filter(a=>a.kind===k).map(a=>`<button class="op ${a.id===M.from?'on':''}" data-act="wFrom" data-id="${a.id}">${cardIcon(a)}<div><div>${a.kind==='crypto'?a.cur:a.cur+' · '+a.project}</div><small>Available ${fmt(avail(a))} ${a.cur}</small></div></button>`).join('')).join('')}</div>`:'';
+ const ddFrom=M.dd==='from'?`<div class="dd" style="top:86px">${['crypto'].map(k=>`<div class="gh">Crypto wallets</div>`+S.accounts.filter(a=>a.kind===k).map(a=>`<button class="op ${a.id===M.from?'on':''}" data-act="wFrom" data-id="${a.id}">${cardIcon(a)}<div><div>${a.kind==='crypto'?a.cur:a.cur+' · '+a.project}</div><small>Available ${fmt(avail(a))} ${a.cur}</small></div></button>`).join('')).join('')}</div>`:'';
  const ddTo=M.dd==='to'?`<div class="dd" style="top:80px">${walletList(M,'wPick',nets)}</div>`:'';
  const empty=!c.amt;
  let toBox;
@@ -844,7 +852,7 @@ function renderFA1(){
   <p class="hint">Credited to EUR · Payouts EU after the transfer arrives, usually in 1–2 business days.</p></div></div>`;
 }
 
-/* ----- Details (D1–D4, C1–C2, S2–S3, RJ1–RJ3, MS1) ----- */
+/* ----- Details (D1–D3, C1–C2, S2–S3, RJ1–RJ3, MS1) ----- */
 function steps(r){
  const names=r.op==='withdraw'?['Submitted','Finance review','Wallet check','Sent']:['Submitted','Finance review','Done'];
  let doneN,cur;
@@ -1004,6 +1012,10 @@ function renderModal(){
  el.innerHTML=`<div class="ov" data-act="ovClick">${map[M.type](M)}</div>`;
  const md=el.querySelector('.modal');if(md){md.setAttribute('role','dialog');md.setAttribute('aria-modal','true');md.setAttribute('aria-label',md.querySelector('h2')?.textContent||'')}
 }
+function renderLoading(){
+ let el=document.getElementById('loading');if(!el){el=document.createElement('div');el.id='loading';document.body.appendChild(el)}
+ el.innerHTML=S.ui.loading?`<div class="lov" role="alertdialog" aria-busy="true" aria-label="Loading"><div class="lbox">${I('refresh','s24 spin')}<div style="font-weight:500;margin-top:12px">Loading…</div><div class="sub">Please don’t close this window</div></div></div>`:'';
+}
 function renderConfirm(){
  const C=S.confirm,el=document.getElementById('confirm');
  if(!C){el.innerHTML='';return}
@@ -1032,7 +1044,7 @@ function renderDemo(){
   <div class="g">Events</div>
   <div class="bs">${b('dIncoming','Incoming Add funds (USDT)',1)}${b('dFA1','Open FA1 · bank transfer (Soon)',1)}</div>
   <div class="g">States</div>
-  <div class="bs">${t('failNext','Next submit fails (T2a/W2a)')}${b('dGridFail','Grid failed to load (G3)',1)}${b('dLoading','Page loading',1)}${t('outdated','Balances outdated')}${b('dZero','Zero balance · EUR Settlements',1)}${b('dNoWallets','Remove all saved wallets (MW5)',S.wallets.length)}${b('dNoNotifs','Clear notifications (NT2)',S.notifs.length)}</div>
+  <div class="bs">${t('failNext','Next submit fails (T2a/W2a)')}${b('dGridFail','Grid failed to load (G3)',1)}${b('dLoading','Loading (overlay)',1)}${t('outdated','Balances outdated')}${b('dZero','Zero balance · EUR Settlements',1)}${b('dNoWallets','Remove all saved wallets (MW5)',S.wallets.length)}${b('dNoNotifs','Clear notifications (NT2)',S.notifs.length)}</div>
  </div></div>`;
 }
 
@@ -1041,7 +1053,7 @@ function render(){
  const ae=document.activeElement,key=ae&&ae.dataset?ae.dataset.in:null,ss=key&&ae.selectionStart!=null?[ae.selectionStart,ae.selectionEnd]:null;
  renderSidebar();
  ({bm:renderBM,mw:renderMW,home:renderHome})[S.page]();
- renderModal();renderConfirm();renderDemo();
+ renderModal();renderConfirm();renderDemo();renderLoading();
  if(key){const el=document.querySelector(`[data-in="${key}"]`);if(el){el.focus();if(ss&&el.setSelectionRange)try{el.setSelectionRange(ss[0],ss[1])}catch(e){}}}
  bindDrop();
  const mk=S.confirm?'c:'+S.confirm.title:S.modal?S.modal.type+':'+(S.modal.stage||''):'';
@@ -1171,6 +1183,7 @@ const A={
  bell:()=>{S.ui.notifOpen=!S.ui.notifOpen;render()},
  markAll:()=>{S.notifs.forEach(n=>n.read=true);render()},
  openNotif:d=>{const n=S.notifs.find(x=>String(x.id)===d.id);n.read=true;S.ui.notifOpen=false;S.page='bm';S.modal=req(n.req)?{type:'details',reqId:n.req}:null;render()},
+ showActions:()=>{S.page='bm';S.ui.notifOpen=false;S.ui.search='';S.f={from:'',to:'',statuses:['awaiting','needs_reply'],op:'',project:'',account:''};render();document.querySelector('.tbl')?.scrollIntoView({behavior:'smooth',block:'center'})},
  refreshBal:()=>{S.ui.outdated=false;toast('Balances updated');render()},
  // wallets
  addWallet:()=>{S.modal={type:'addWallet',address:'',name:''};render()},
@@ -1205,7 +1218,7 @@ const A={
  dFA1:()=>{S.modal={type:'fa1'};render()},
  dToggle:d=>{S.ui[d.k]=!S.ui[d.k];render()},
  dGridFail:()=>{S.page='bm';S.ui.gridState='failed';render()},
- dLoading:()=>{S.page='bm';S.ui.loading=true;render();setTimeout(()=>{S.ui.loading=false;render()},1800)},
+ dLoading:()=>{S.ui.loading=true;render();setTimeout(()=>{S.ui.loading=false;render()},1800)},
  dZero:()=>{const a=acc('set-eur');a.total=hold(a);S.page='bm';toast('EUR · Settlements: available balance is 0.00');render()},
  dNoWallets:()=>{S.wallets=[];S.page='mw';render()},
  dNoNotifs:()=>{S.notifs=[];S.page='home';S.ui.notifOpen=true;render()},

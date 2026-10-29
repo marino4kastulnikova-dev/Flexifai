@@ -28,18 +28,29 @@ The **Demo** button (bottom right) opens a panel that plays the finance team's s
 
 ## Frames covered
 
-Transfer T0–T4, FT1–FT2, FP1 · Withdraw W0–W5, W1e, FW1, FW1a, FW2 · Add funds B1, B1a, FA1 · Details D1–D4, C1–C2, S1–S3, RJ1–RJ3, MS1 · Actions R1, N1, N1a, C1a · Export E0–E2 · Filter F1–F3 · Grid states G1–G3 · My wallets MW1–MW5, AD1–AD2 · Home NT1, NT1a, NT2 · zero / loading states.
+Transfer T0–T4, FT1–FT2, FP1 · Withdraw W0–W5, W1e (crypto only) · Add funds B1, B1a, FA1 · Details D1–D3, C1–C2, S1–S3, RJ1–RJ3, MS1 · Actions R1, N1, N1a, C1a · Export E0–E2 · Filter F1–F3 · Grid states G1–G3 · My wallets MW1–MW5, AD1–AD2 · Home NT1, NT1a, NT2 · zero / loading states.
+
+## Changes in this version
+
+- "Transfer between balances" is now "Transfer".
+- Withdraw only from a crypto wallet (USDT · TRON, USDC · Ethereum), no conversion. Fiat withdraw (FW1, FW1a, FW2, D4) removed; TR-2026-015 is now a USDT withdrawal.
+- Account menu shows only allowed actions: Settlements — Transfer, Account details, Remove from Home; Payouts — Add funds (Soon), Transfer, Account details, Remove from Home; crypto — Add funds, Transfer, Withdraw, Account details, Remove from Home. Zero available balance hides Transfer and Withdraw.
+- "Needs your action" is a one-line bar with request chips (ID, action, time left); a chip opens the request details, "Show in table" filters the grid. Same bar on Home with "Open all".
+- Loading is a full-screen blurred overlay with a spinner (as in Pay by link).
+- Not reproduced: "TO DISCUSS · Documents for Withdraw".
 
 ## Not from the mockups (invented or simplified)
 
 - Texts not found in Figma: "Balances outdated" banner; "Not enough available funds" banner for crypto sources; "Not an Ethereum address…"; reason why a wallet can't be deleted; public reject reasons other than "Required documents were not provided"; finance question for transfers; "No decision on the new terms by …"; notification titles "Transfer submitted / done", "Request cancelled"; toasts after accept terms / cancel / documents; "This wallet is already saved as …"; export file name for a period.
 - Mock data conflicts: holds are computed from requests, so USDT and USD Settlements show "On hold" (main frame shows "Nothing on hold", AD1 shows 5 000.00 on hold). Kraken USDC's full address was changed because in Figma it equals the cabinet's own USDC deposit address. TRON addresses of 33 or 34 characters are accepted (the B1 address has 33).
+- Loading overlay text is "Loading… / Please don’t close this window" (the mockup reuses "Processing refund…" from Pay by link).
+- At 1440 px the third chip in "Needs your action" scrolls inside the bar; at 1920 px all three fit.
 - Simplified: QR is decorative; Export and Deal / Payment confirmation show a toast without a real file; Amount sort ignores currency; Home widgets are simplified; sidebar is 320 px instead of 352 px.
 
 ## Open questions from Notes for dev that shaped the prototype
 
 1. Settlements is never a destination.
-2. Payouts → crypto wallet is not allowed (swap disabled with tooltip).
+2. Payouts → crypto wallet is allowed: it is the only way to withdraw fiat (Payouts → crypto wallet → Withdraw). Swap between a crypto wallet and Payouts is active.
 3. Transfers with conversion are executed by finance (via Demo).
 4. A wallet that didn't pass AML stays in the list, marked and disabled in Withdraw.
 5. Purpose is required and preselected for all operations.
