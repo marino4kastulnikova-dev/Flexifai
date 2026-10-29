@@ -117,12 +117,17 @@ tr.r:focus-visible td{background:var(--hover-muted)}
 /* Balances */
 .groups-h{font-size:12px;color:var(--text-secondary);margin:14px 0 8px}
 .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.card{position:relative;z-index:0;background:var(--menu-background);color:#fff;border-radius:var(--radius-medium);padding:16px;min-height:168px;overflow:visible;display:flex;flex-direction:column}
+.card{position:relative;z-index:0;background:var(--menu-background);color:#fff;border-radius:var(--radius-medium);padding:20px 20px 15px;min-height:0;overflow:visible;display:flex;flex-direction:column}
 .card:has(.menu),.card:has(.tipwrap:hover),.card:has(.tipwrap:focus){z-index:50}
 .card .wmc{position:absolute;inset:0;overflow:hidden;border-radius:var(--radius-medium);pointer-events:none}
 .card .wm{position:absolute;right:-6px;bottom:-24px;font-size:150px;line-height:1;color:#2d2c30;font-weight:600;pointer-events:none;overflow:hidden;user-select:none}
-.card-h{display:flex;align-items:center;gap:10px;position:relative;z-index:1}
-.card-h .t{font-weight:500;white-space:nowrap}
+.card-h{display:flex;align-items:center;gap:10px;position:relative;z-index:1;height:36px}
+.card-h>div:nth-child(2){min-width:0;flex:1 1 0}
+.card-h>.sp{display:none}
+.card-h small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-h .t{white-space:normal;line-height:17px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-h .t:has(+small){-webkit-line-clamp:1}
+.card-h .t{font-weight:500}
 .card-h small{display:block;color:var(--menu-text-muted);font-size:12px;line-height:16px}
 .cicon{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:15px;color:#fff;flex:none}
 .cbtn{width:28px;height:28px;border-radius:50%;background:#3a383d;display:grid;place-items:center;color:#cfcdd3}
@@ -133,12 +138,15 @@ tr.r:focus-visible td{background:var(--hover-muted)}
 .card .amt small{font-size:12px;color:var(--menu-text-muted);margin-left:6px}
 .card .ny{font-size:11px;color:var(--menu-text-muted);position:relative;z-index:5;display:flex;align-items:center;gap:4px}
 .ny-i{display:inline-flex;cursor:help}
+.card .ny.ny-cut{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .ny .ny-t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.card .ny .ny-i{flex:none}
 .tip.ny-tip{left:-6px;top:20px;font-size:13px;line-height:20px;padding:8px 14px;z-index:70;box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .tipwrap:focus>.tip{opacity:1}
-.hold{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:6px;height:24px;padding:0;color:var(--menu-text-muted);font-size:11px;position:relative;z-index:1}
+.hold{margin-top:8px;align-self:flex-start;display:inline-flex;align-items:center;gap:6px;height:24px;padding:0;color:var(--menu-text-muted);font-size:11px;position:relative;z-index:1}
 .hold.on{color:#f2a33a}
-.cards .card{height:212px}
-.addcard{border:1px dashed #d8d8d8;border-radius:var(--radius-medium);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:212px;color:var(--text-main);font-size:13px}
+.cards .card{height:202px}
+.addcard{border:1px dashed #d8d8d8;border-radius:var(--radius-medium);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:202px;color:var(--text-main);font-size:13px}
 .addcard small{color:var(--text-secondary);font-size:11px}
 .menu{position:absolute;z-index:60;background:#fff;color:var(--text-main);border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.18);padding:6px;min-width:200px}
 .menu .mi{display:flex;align-items:center;gap:10px;width:100%;height:36px;padding:0 10px;border-radius:8px;font-size:13px;text-align:left;position:relative}
@@ -309,12 +317,12 @@ select.tin{appearance:auto}
 .kpi .big{font-size:24px;line-height:32px;margin:6px 0}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
 .hwrap{position:relative;margin-top:16px}
-.hwrap::after{content:"";position:absolute;top:0;right:0;width:152px;height:168px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff);pointer-events:none;z-index:40}
+.hwrap::after{content:"";position:absolute;top:0;right:0;width:152px;height:202px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff);pointer-events:none;z-index:40}
 .hwrap.end::after{display:none}
 .hcards{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;padding-bottom:230px;margin-bottom:-230px;pointer-events:none}
 .hcards::-webkit-scrollbar{display:none}
 .hcards>*{pointer-events:auto}
-.hcards .card{flex:0 0 340px;height:168px;min-height:0}
+.hcards .card{flex:0 0 352px;height:202px}
 </style>
 </head>
 <body>
@@ -446,7 +454,7 @@ const accName=a=>a.kind==='crypto'?`${a.cur} wallet`:`${a.cur} · ${a.kind==='se
 const accSub=a=>a.kind==='crypto'?'Crypto wallet':a.project;
 const accFull=a=>`${accName(a)} · ${accSub(a)}`;
 const accParen=a=>a.kind==='crypto'?`your ${a.cur} wallet`:`${accName(a)} (${a.project})`;
-const accCardTitle=a=>a.kind==='crypto'?`${a.cur} · ${a.cur==='USDT'?'TRC-20':'ERC-20'}`:a.cur;
+const accCardTitle=a=>a.kind==='crypto'?`${a.cur} · ${a.cur==='USDT'?'TRC‑20':'ERC‑20'}`:a.cur;
 const dirName=(a,pos)=>a.kind==='crypto'?(pos==='wfrom'?a.cur:`${a.cur} wallet`):a.project;
 function kraken(f,t){if(f===t)return 1;const k=D.kraken[`${f}>${t}`];if(k)return k;const rv=D.kraken[`${t}>${f}`];if(rv)return r4(1/rv);return r4(D.usd[f]/D.usd[t])}
 const r4=n=>Math.round(n*10000)/10000;
@@ -504,10 +512,10 @@ function renderCard(a,home){
    ${mi('accdetails','file','Account details')}
    ${mi('fav','home',a.fav?'Remove from Home':'Add to Home')}
  </div>`:'';
- let ny='';
+ let ny='<div class="ny" aria-hidden="true">&nbsp;</div>';
  if(a.notYet&&!home){
-  ny=a.releases?`<div class="ny">${fmt(a.notYet)} ${a.cur} not available yet <span class="tipwrap ny-i" tabindex="0" aria-label="When it becomes available">${I('info','s14')}<span class="tip ny-tip">${a.releases.join('<br>')}</span></span></div>`
-   :`<div class="ny">${fmt(a.notYet)} ${a.cur} in processing, not available yet</div>`;
+  ny=a.releases?`<div class="ny"><span class="ny-t" title="${fmt(a.notYet)} ${a.cur} not available yet">${fmt(a.notYet)} ${a.cur} not available yet</span><span class="tipwrap ny-i" tabindex="0" aria-label="When it becomes available">${I('info','s14')}<span class="tip ny-tip">${a.releases.join('<br>')}</span></span></div>`
+   :`<div class="ny ny-cut" title="${fmt(a.notYet)} ${a.cur} in processing, not available yet">${fmt(a.notYet)} ${a.cur} in processing, not available yet</div>`;
  }
  return `<div class="card">
   <div class="wmc"><div class="wm">${SYM[a.cur]}</div></div>
