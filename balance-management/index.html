@@ -127,7 +127,8 @@ tr.r:focus-visible td{background:var(--hover-muted)}
 .tipwrap:focus>.tip{opacity:1}
 .hold{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:#3a383d;color:#a9a7ad;font-size:11px;position:relative;z-index:1}
 .hold.on{background:#4a3214;color:#f2a33a}
-.addcard{border:1px dashed #d8d8d8;border-radius:var(--radius-medium);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:168px;color:var(--text-main);font-size:13px}
+.cards .card{height:212px}
+.addcard{border:1px dashed #d8d8d8;border-radius:var(--radius-medium);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:212px;color:var(--text-main);font-size:13px}
 .addcard small{color:var(--text-secondary);font-size:11px}
 .menu{position:absolute;z-index:60;background:#fff;color:var(--text-main);border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.18);padding:6px;min-width:200px}
 .menu .mi{display:flex;align-items:center;gap:10px;width:100%;height:36px;padding:0 10px;border-radius:8px;font-size:13px;text-align:left;position:relative}
@@ -297,8 +298,13 @@ select.tin{appearance:auto}
 .kpi{background:#fff;border-radius:var(--radius-medium);padding:16px}
 .kpi .big{font-size:24px;line-height:32px;margin:6px 0}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.hcards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.hcards .card{min-height:130px}
+.hwrap{position:relative;margin-top:16px}
+.hwrap::after{content:"";position:absolute;top:0;right:0;width:152px;height:168px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff);pointer-events:none;z-index:40}
+.hwrap.end::after{display:none}
+.hcards{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;padding-bottom:230px;margin-bottom:-230px;pointer-events:none}
+.hcards::-webkit-scrollbar{display:none}
+.hcards>*{pointer-events:auto}
+.hcards .card{flex:0 0 340px;height:168px;min-height:0}
 </style>
 </head>
 <body>
@@ -637,7 +643,7 @@ function renderHome(){
   <div class="kpis">${kpi('Turnover today','150.00 EUR',1)}${kpi('Turnover 7 days','210.00 EUR',1)}${kpi('Turnover 30 days','670.00 EUR')}<div class="kpi"><div>Average check</div><div class="big">0.00 EUR</div><div class="sub">Median: 10</div></div></div>
   <div class="panel"><div class="row"><h2 style="font-size:16px">Favourite balances</h2><span class="sp"></span>
    <button class="btn sec" data-act="addfunds">${I('plus','s16')}Add funds</button><button class="btn sec" data-act="transfer">${I('transfer','s16')}Transfer</button><button class="btn pri" data-act="withdraw">${I('ur','s16')}Withdraw</button></div>
-   <div class="hcards" style="margin-top:12px">${favs.map(a=>renderCard(a,true)).join('')||'<div class="sub">No favourite balances</div>'}</div></div>
+   <div class="hwrap"><div class="hcards" id="hcards">${favs.map(a=>renderCard(a,true)).join('')||'<div class="sub">No favourite balances</div>'}</div></div></div>
   <div class="two"><div class="panel"><h2 style="font-size:16px">Volume dynamic, EUR</h2>
     <svg viewBox="0 0 600 200" style="width:100%;height:200px;margin-top:12px"><defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#b481ff" stop-opacity=".6"/><stop offset="1" stop-color="#b481ff" stop-opacity=".05"/></linearGradient></defs>
     <path d="M0 110 C40 60 70 50 100 70 S150 120 180 100 S230 80 260 105 S310 130 340 95 S400 85 430 90 S480 70 520 45 S580 40 600 60 L600 200 L0 200Z" fill="url(#g)"/><path d="M0 110 C40 60 70 50 100 70 S150 120 180 100 S230 80 260 105 S310 130 340 95 S400 85 430 90 S480 70 520 45 S580 40 600 60" fill="none" stroke="#9b6be0" stroke-width="2"/></svg></div>
@@ -1056,6 +1062,7 @@ function render(){
  renderModal();renderConfirm();renderDemo();renderLoading();
  if(key){const el=document.querySelector(`[data-in="${key}"]`);if(el){el.focus();if(ss&&el.setSelectionRange)try{el.setSelectionRange(ss[0],ss[1])}catch(e){}}}
  bindDrop();
+ const hc=document.getElementById('hcards');if(hc){hc.scrollLeft=S.ui.hScroll||0;const upd=()=>{S.ui.hScroll=hc.scrollLeft;hc.parentNode.classList.toggle('end',hc.scrollLeft+hc.clientWidth>=hc.scrollWidth-4)};hc.onscroll=upd;upd()}
  const mk=S.confirm?'c:'+S.confirm.title:S.modal?S.modal.type+':'+(S.modal.stage||''):'';
  if(mk&&mk!==S._mk){const root=document.querySelector(S.confirm?'.confirm':'.modal');(root?.querySelector('input:not([type=checkbox]),textarea')||root?.querySelector('.mf button:last-child,button'))?.focus()}
  S._mk=mk;
