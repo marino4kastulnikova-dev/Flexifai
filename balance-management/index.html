@@ -116,7 +116,7 @@ tr.r:focus-visible td{background:var(--hover-muted)}
 .note.info{background:var(--blue-muted);border-color:var(--blue);color:var(--blue-text)}.note.info .ic{color:var(--blue)}
 /* Balances */
 .groups-h{font-size:12px;color:var(--text-secondary);margin:14px 0 8px}
-.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .card{position:relative;z-index:0;background:var(--menu-background);color:#fff;border-radius:var(--radius-medium);padding:20px 20px 15px;min-height:0;overflow:visible;display:flex;flex-direction:column}
 .card:has(.menu),.card:has(.tipwrap:hover),.card:has(.tipwrap:focus){z-index:50}
 .card .wmc{position:absolute;inset:0;overflow:hidden;border-radius:var(--radius-medium);pointer-events:none}
@@ -181,6 +181,7 @@ td.cb,th.cb{width:40px}
 .badge{display:inline-flex;align-items:center;height:20px;padding:0 8px;border-radius:999px;font-size:11px;border:1px solid;white-space:nowrap}
 .b-await{background:var(--orange);border-color:var(--orange);color:#fff}
 .b-needs{background:var(--blue);border-color:var(--blue);color:#fff}
+.b-action{background:var(--brand-color);border-color:var(--brand-color);color:#fff}
 .b-blue{color:var(--blue);border-color:var(--blue)}
 .b-green{color:var(--label-active);border-color:var(--label-active)}
 .b-red{color:var(--red);border-color:var(--red)}
@@ -304,6 +305,7 @@ select.tin{appearance:auto}
 .topbar{display:flex;gap:8px;align-items:center;background:#fff;border-radius:var(--radius-medium);padding:12px 16px;margin-bottom:12px}
 .tsel{height:32px;border:1px solid var(--outline);border-radius:8px;padding:0 10px;display:inline-flex;align-items:center;gap:24px;font-size:13px}
 .iconbtn{width:32px;height:32px;border-radius:8px;background:var(--background-muted);display:grid;place-items:center;position:relative;color:var(--text-secondary)}
+.iconbtn.on{background:var(--brand-color-muted);color:var(--brand-color)}
 .nbadge{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;border-radius:9px;background:var(--red);color:#fff;font-size:11px;display:grid;place-items:center;padding:0 4px}
 .npanel{position:absolute;right:0;top:40px;width:400px;background:#fff;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.18);z-index:40;color:var(--text-main);text-align:left}
 .npanel .nh{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--outline);font-weight:500}
@@ -330,7 +332,7 @@ select.tin{appearance:auto}
 .hcards{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;padding-bottom:230px;margin-bottom:-230px;pointer-events:none}
 .hcards::-webkit-scrollbar{display:none}
 .hcards>*{pointer-events:auto}
-.hcards .card{flex:0 0 352px;height:202px}
+.hcards .card{flex:0 0 auto;width:calc((100% - 48px) / 4);height:202px}
 </style>
 </head>
 <body>
@@ -655,7 +657,7 @@ function renderHome(){
  const unread=S.notifs.filter(n=>!n.read).length;
  const actionNeeded=n=>{const r=req(n.req);return n.action&&r&&r.status===n.action};
  const panel=S.ui.notifOpen?`<div class="npanel"><div class="nh">Notifications<span class="sp"></span>${S.notifs.length?`<span class="lnk" style="color:var(--brand-color);text-decoration:none;font-size:12px;font-weight:400" data-act="markAll">Mark all as read</span>`:''}</div>
-  ${S.notifs.length?`<div style="max-height:480px;overflow:auto">${S.notifs.map(n=>`<button class="nitem ${n.read?'':'unread'}" data-act="openNotif" data-id="${n.id}"><div class="nt">${esc(n.title)}</div><p>${esc(n.text)}</p>${actionNeeded(n)?'<span class="badge b-needs">Action needed</span><br>':''}<small>${n.time}</small></button>`).join('')}</div>
+  ${S.notifs.length?`<div style="max-height:480px;overflow:auto">${S.notifs.map(n=>`<button class="nitem ${n.read?'':'unread'}" data-act="openNotif" data-id="${n.id}"><div class="nt">${esc(n.title)}</div><p>${esc(n.text)}</p>${actionNeeded(n)?'<span class="badge b-action">Action needed</span><br>':''}<small>${n.time}</small></button>`).join('')}</div>
   <div style="text-align:center;padding:12px"><span class="lnk" role="button" tabindex="0" style="color:var(--brand-color);text-decoration:none" data-act="nav" data-page="bm">Open Balance management</span></div>`
   :`<div class="empty" style="padding:28px 16px"><div style="font-weight:500">No notifications yet</div><div class="sub">Updates on your requests will appear here.</div></div>`}</div>`:'';
  const HOME_ORDER=['set-eur','pay-eur','set-usd','pay-gbp','set-gbp','pay-usd','usdt','usdc'];
@@ -669,7 +671,7 @@ function renderHome(){
    <div class="hwrap"><div class="hcards" id="hcards">${favs.map(a=>renderCard(a,true)).join('')||'<div class="sub">No favourite balances</div>'}</div><button class="harr prev" data-act="hScroll" data-d="-1" aria-label="Previous balances">${I('cl','s20')}</button><button class="harr next" data-act="hScroll" data-d="1" aria-label="Next balances">${I('cr','s20')}</button></div></div>
   ${actionBar(true)}
   <div class="topbar"><span class="tsel">30 May–30 Apr ${I('cd','s16')}</span><span class="tsel">EUR ${I('cd','s16')}</span><span class="tsel" style="width:160px;justify-content:space-between">All projects ${I('cd','s16')}</span><span class="sp"></span>
-   <div style="position:relative"><button class="iconbtn" data-act="bell">${I('bell','s16')}${unread?`<span class="nbadge">${unread}</span>`:''}</button>${panel}</div>
+   <div style="position:relative"><button class="iconbtn ${S.ui.notifOpen?'on':''}" data-act="bell" aria-expanded="${S.ui.notifOpen}" aria-label="Notifications">${I('bell','s16')}${unread?`<span class="nbadge">${unread}</span>`:''}</button>${panel}</div>
    <button class="iconbtn" data-act="dead">${I('moon','s16')}</button></div>
   <div class="kpis">${kpi('Turnover today','150.00 EUR',1)}${kpi('Turnover 7 days','210.00 EUR',1)}${kpi('Turnover 30 days','670.00 EUR')}<div class="kpi"><div>Average check</div><div class="big">0.00 EUR</div><div class="sub">Median: 10</div></div></div>
   <div class="two"><div class="panel"><h2 style="font-size:16px">Volume dynamic, EUR</h2>
@@ -1227,7 +1229,7 @@ const A={
  bell:()=>{S.ui.notifOpen=!S.ui.notifOpen;render()},
  markAll:()=>{S.notifs.forEach(n=>n.read=true);render()},
  openNotif:d=>{const n=S.notifs.find(x=>String(x.id)===d.id);n.read=true;S.ui.notifOpen=false;S.page='bm';S.modal=req(n.req)?{type:'details',reqId:n.req}:null;render()},
- hScroll:d=>{const hc=document.getElementById('hcards');if(hc)hc.scrollBy({left:(+d.d)*368,behavior:'smooth'})},
+ hScroll:d=>{const hc=document.getElementById('hcards');if(!hc)return;const c=hc.querySelector('.card');hc.scrollBy({left:(+d.d)*((c?c.getBoundingClientRect().width:352)+16),behavior:'smooth'})},
  showActions:()=>{S.page='bm';S.ui.notifOpen=false;S.ui.search='';S.f={from:'',to:'',statuses:['awaiting','needs_reply'],op:'',project:'',account:''};render();document.querySelector('.tbl')?.scrollIntoView({behavior:'smooth',block:'center'})},
  refreshBal:()=>{S.ui.outdated=false;toast('Balances updated');render()},
  // wallets
