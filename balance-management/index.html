@@ -505,7 +505,7 @@ function renderSidebar(){
    ${grp('merchants',dead('merch','Merchants')+dead('proj','Projects'))}
    ${grp('pay by link',dead('pbl','Pay by link'))}
    ${grp('settings',dead('acl','Access Control'))}</nav>
-  <div class="sb-foot"><div class="div"></div><div class="prof"><div class="ava">CF</div><div><b>Christian Friendly</b><small>Admin</small></div></div>${dead('logout','Log out')}</div>`;
+  <div class="sb-foot"><div class="div"></div><div class="prof"><div class="ava">CF</div><div><b>Christian Friendly</b><small>Admin</small></div></div><button class="sb-item" data-act="logout">${SBI.logout}Log out</button></div>`;
 }
 
 /* ============ Balance cards ============ */
@@ -1149,6 +1149,7 @@ function execute(r){
 const A={
  nav:d=>{S.page=d.page;S.ui.notifOpen=false;S.ui.menu=null;render()},
  dead:()=>toast('Not part of this prototype'),
+ logout:()=>{location.href='../merchant-cabinet/'},
  proj:d=>{S.ui.proj=d.p;render()},
  cardmenu:d=>{S.ui.menu=S.ui.menu===d.id?null:d.id;render()},
  fav:d=>{const a=acc(d.id);a.fav=!a.fav;S.ui.menu=null;render()},
@@ -1324,6 +1325,7 @@ function bindDrop(){const d=document.getElementById('drop');if(!d)return;
  d.ondragover=e=>{e.preventDefault();d.classList.add('hov')};d.ondragleave=()=>d.classList.remove('hov');d.ondrop=e=>{e.preventDefault();addFiles(e.dataTransfer.files)}}
 
 if(location.hash==='#wallets')S.page='mw';
+if(location.hash==='#home')S.page='home';
 render();
 </script>
 </body>

@@ -922,8 +922,8 @@
 
   loginBtn.addEventListener('click', function () {
     if (!loginBtn.classList.contains('enabled')) return;
-    document.getElementById('screen-login').classList.remove('active');
-    document.getElementById('screen-dashboard').classList.add('active');
+    // Home of the cabinet is the Balance management prototype's Home (Figma "Home — favourite balances")
+    window.location.href = '../balance-management/#home';
   });
 
   [emailInput, passwordInput].forEach(function (el) {
