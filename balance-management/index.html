@@ -508,7 +508,7 @@ function renderCard(a,home){
  const menu=menuOpen?`<div class="menu" style="right:8px;top:48px">
    ${a.kind==='crypto'?mi('addfunds','plus','Add funds'):a.kind==='pay'?mi('','plus','Add funds',true,'','<span class="soon">Soon</span>'):''}
    ${zero?'':mi('transfer','transfer','Transfer')}
-   ${(a.kind==='crypto'||a.kind==='set')&&!zero?mi('withdraw','ur','Withdraw'):''}
+   ${a.kind==='crypto'&&!zero?mi('withdraw','ur','Withdraw'):a.kind==='set'?mi('','ur','Withdraw',true,'','<span class="soon">Soon</span>'):''}
    ${mi('accdetails','file','Account details')}
    ${mi('fav','home',a.fav?'Remove from Home':'Add to Home')}
  </div>`:'';
@@ -763,7 +763,7 @@ function renderTransferReview(M,c){
 /* ----- Withdraw ----- */
 function wAllowedNets(from){const a=acc(from);return a.kind==='crypto'?[a.net]:['TRON','ETH']}
 function openWithdraw(fromId,opts={}){
- const from=fromId&&['crypto','set'].includes(acc(fromId).kind)?fromId:'usdt',nets=wAllowedNets(from);
+ const from=fromId&&(acc(fromId).kind==='crypto'||(opts.soon&&acc(fromId).kind==='set'))?fromId:'usdt',nets=wAllowedNets(from);
  const w=S.wallets.find(x=>nets.includes(x.net)&&x.status==='active');
  S.modal={type:'withdraw',from,walletId:w?w.id:null,nw:w?null:{address:'',name:'',save:true},amountStr:'',purpose:D.purposes[0],comment:'',files:[],dd:null,stage:'form',err:false};
 }
@@ -800,7 +800,7 @@ function renderWithdraw(M){
  const c=wCalc(M),{f,tg}=c;
  if(M.stage==='review')return renderWithdrawReview(M,c);
  const nets=wAllowedNets(M.from);
- const ddFrom=M.dd==='from'?`<div class="dd" style="top:86px">${['crypto','set'].map(k=>`<div class="gh">${k==='crypto'?'Crypto wallets':'Settlements accounts'}</div>`+S.accounts.filter(a=>a.kind===k).map(a=>`<button class="op ${a.id===M.from?'on':''}" data-act="wFrom" data-id="${a.id}">${cardIcon(a)}<div><div>${a.kind==='crypto'?a.cur:a.cur+' · '+a.project}</div><small>Available ${fmt(avail(a))} ${a.cur}</small></div></button>`).join('')).join('')}</div>`:'';
+ const ddFrom=M.dd==='from'?`<div class="dd" style="top:86px">${(acc(M.from).kind==='set'?['crypto','set']:['crypto']).map(k=>`<div class="gh">${k==='crypto'?'Crypto wallets':'Settlements accounts'}</div>`+S.accounts.filter(a=>a.kind===k).map(a=>`<button class="op ${a.id===M.from?'on':''}" data-act="wFrom" data-id="${a.id}">${cardIcon(a)}<div><div>${a.kind==='crypto'?a.cur:a.cur+' · '+a.project}</div><small>Available ${fmt(avail(a))} ${a.cur}</small></div></button>`).join('')).join('')}</div>`:'';
  const ddTo=M.dd==='to'?`<div class="dd" style="top:80px">${walletList(M,'wPick',nets)}</div>`:'';
  const empty=!c.amt;
  let toBox;
@@ -1074,7 +1074,7 @@ function renderDemo(){
   <select data-in="demoReason">${D.publicReasons.map(x=>`<option ${S.ui.reason===x?'selected':''}>${x}</option>`).join('')}</select>
   <div class="bs" style="margin-top:6px">${b('dRejPublic','Reject · reason shown',can.rej)}${b('dRejAml','Reject · AML (general text)',can.rej)}${b('dRejAuto','Auto-reject (deadline)',can.auto)}</div>
   <div class="g">Events</div>
-  <div class="bs">${b('dIncoming','Incoming Add funds (USDT)',1)}${b('dFA1','Open FA1 · bank transfer (Soon)',1)}</div>
+  <div class="bs">${b('dIncoming','Incoming Add funds (USDT)',1)}${b('dFA1','Open FA1 · bank transfer (Soon)',1)}${b('dFW1','Open FW1 · Withdraw from Settlements (Soon)',1)}</div>
   <div class="g">Needs your action · chip style</div>
   <div class="bs">${['A','B','C','D','E','F','G','H'].map(v=>`<button class="db ${(S.ui.chipVar||'G')===v?'on':''}" data-act="dChip" data-v="${v}">${{A:'A · Outline',B:'B · Brand fill',C:'C · Deadline first',D:'D · Brand tint',E:'E · Orange fill',F:'F · Brand fill',G:'G · Soft orange',H:'H · Dark fill'}[v]}</button>`).join('')}</div>
   <div class="g">States</div>
@@ -1251,6 +1251,7 @@ const A={
   release(r,'auto',r.status==='needs_reply'?`No reply to the finance team’s question by ${dl}`:`No decision on the new terms by ${dl}`,dl);toast(`${r.id} rejected automatically`);render()},
  dIncoming:()=>{const t=now(),id=nextId();S.requests.unshift({id,op:'addfunds',from:null,to:'usdt',amount:1000,fromCur:'USDT',receive:997,toCur:'USDT',fee:3,feeCur:'USDT',approx:true,created:t,updated:t,status:'pending'});S.demoReq=id;S.page='bm';toast(`Incoming transfer detected on your USDT address · ${id} Pending`);render()},
  dChip:d=>{S.ui.chipVar=d.v;render()},
+ dFW1:()=>{openWithdraw('set-eur',{soon:true});render()},
  dFA1:()=>{S.modal={type:'fa1'};render()},
  dToggle:d=>{S.ui[d.k]=!S.ui[d.k];render()},
  dGridFail:()=>{S.page='bm';S.ui.gridState='failed';render()},

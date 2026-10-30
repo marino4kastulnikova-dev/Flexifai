@@ -23,7 +23,7 @@ The **Demo** button (bottom right) opens a panel that plays the finance team's s
 
 - pick an active request, then: Take in work, Ask a question, New terms, Wallet check (start / RED), Execute (or Credit for Add funds);
 - Reject: with a public reason, AML (general text + Contact support), auto-reject by deadline;
-- events: incoming Add funds, FA1 bank transfer (Soon);
+- events: incoming Add funds, FA1 bank transfer (Soon), FW1 withdraw from Settlements (Soon);
 - states: next submit fails (T2a/W2a), grid failed to load (G3), page loading, balances outdated, zero balance, no saved wallets (MW5), no notifications (NT2).
 
 ## Frames covered
@@ -38,7 +38,7 @@ Transfer T0–T4, FT1–FT2, FP1 · Withdraw W0–W5, W1e (crypto only) · Add f
 - "Needs your action" is a one-line bar with request chips (ID, action, time left); a chip opens the request details, "Show in table" filters the grid. Same bar on Home with "Open all".
 - Loading is a full-screen blurred overlay with a spinner (as in Pay by link).
 - Purpose and supporting documents are asked ONLY in Withdraw from a Settlements account (FW1–FW2): purpose chips + upload (PDF, JPG or PNG, up to 10 MB, up to 5 files); Continue needs at least one document. Transfer and crypto Withdraw ask for neither.
-- Withdraw is in the Settlements card menu (in the design, not in the first release).
+- Settlements card menu: Transfer, Withdraw (disabled, "Soon"), Account details, Remove from Home. Withdraw from Settlements (FW1–FW2 with purpose and documents) is not in the first release: open it from the Demo panel ("Open FW1 · Withdraw from Settlements (Soon)").
 - "On hold / Nothing on hold" on cards is plain text without a pill; "Nothing on hold" is muted.
 - "Needs your action" uses the design-system Warning alert style; chips use variant G · Soft orange fill (as in Figma). The Demo panel also switches outline variants B–D and filled variants E–H — same as the Figma frames "VA · Needs your action — chip variants" and "… — filled chip variants".
 
